@@ -66,8 +66,39 @@ def main() -> int:
         return 1
 
     if args.command == "check":
-        print("Check command not yet implemented.")
-        return 1
+        from .latex_env import check_environment, get_installation_instructions
+
+        print("Checking LaTeX environment...\n")
+        status = check_environment()
+
+        # LuaLaTeX status
+        if status['lualatex']['installed']:
+            print(f"✓ LuaLaTeX: {status['lualatex']['info']}")
+        else:
+            print(f"✗ LuaLaTeX: {status['lualatex']['info']}")
+
+        # DND Template status
+        if status['dnd_template']['found']:
+            print(f"✓ DND Template: {status['dnd_template']['location']}")
+        else:
+            print(f"✗ DND Template: {status['dnd_template']['location']}")
+
+        print()
+
+        if status['ready']:
+            print("✓ Environment is ready! You can start generating documents.")
+            return 0
+        else:
+            print("✗ Environment setup incomplete. See instructions below:\n")
+            instructions = get_installation_instructions()
+
+            if not status['lualatex']['installed']:
+                print(instructions['lualatex'])
+
+            if not status['dnd_template']['found']:
+                print(instructions['dnd_template'])
+
+            return 1
 
     return 0
 
