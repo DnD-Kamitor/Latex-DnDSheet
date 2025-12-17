@@ -1,27 +1,72 @@
 # Latex-DnDSheet
 
-A Linux terminal application for creating D&D character sheets, NPC sheets, and DM session materials using LaTeX and the [DND-5e-LaTeX-Template](https://github.com/rpgtex/DND-5e-LaTeX-Template).
+A Linux TUI (Terminal User Interface) application for creating beautiful D&D-themed documents using LaTeX. Generate character sheets, spell books, ledgers, NPC stat blocks, and immersive in-world documents with the authentic look and feel of official D&D materials.
 
-## Project Goals
+## Project Vision
 
-Create a terminal-based tool that generates professional-quality D&D materials in LaTeX format with offline capability.
+**More than just character sheets** - this tool empowers DMs and players to create any D&D-themed document:
 
-### Features
+- 📜 Character sheets with multiple layout options
+- 📖 In-world spell books ("The Art of Evocation", "Herbalism Compendium")
+- 📋 Ledgers and inventory trackers
+- 👤 NPC stat blocks and villain profiles
+- 🗺️ Adventure modules and session notes
+- 📚 Custom rule books and homebrew content
+- 🎭 Props like tavern menus, wanted posters, guild charters
 
-- **Character Sheet Creator**
+All using professional LaTeX typesetting with the D&D aesthetic.
+
+## Core Philosophy
+
+1. **Template-Based Workflow**: Choose from pre-built templates or customize existing ones
+2. **Offline-First**: No internet required - complete creative control
+3. **TUI Interface**: Fast, keyboard-driven terminal interface for power users
+4. **File-Based**: Save your work as JSON/YAML for version control and collaboration
+
+## Features
+
+### 📄 Document Templates
+
+- **Character Sheets**
   - D&D 2024 rules support
   - D&D 5e (2014) rules support
-  - Traditional ledger sheets (items, gold tracking, spells)
-  - Extended notes variant
+  - Traditional ledger variants (items, gold, spell tracking)
+  - Extended notes and backstory pages
 
-- **Dungeon Master Tools**
+- **In-World Books & Documents**
+  - Spell grimoires ("Fireball: Theory and Practice")
+  - Crafting guides (Herbalism, Alchemy, Smithing)
+  - Lore books and historical texts
+  - Guild manuals and organization handbooks
+  - Religious texts and prayer books
+
+- **DM Resources**
   - NPC creator with stat blocks
-  - Session planning and note templates
+  - Villain profiles with motivations and tactics
+  - Session planning and encounter notes
+  - Adventure module templates
+  - Campaign world-building documents
 
-- **Output Format**
-  - Professional D&D-styled PDFs using LaTeX
-  - Fully offline workflow
-  - Compatible with VSCodium/VSCode and Overleaf
+- **Props & Handouts**
+  - Tavern menus and price lists
+  - Wanted posters and bounty notices
+  - Maps and location descriptions
+  - Letters, scrolls, and documents
+  - Item cards and treasure descriptions
+
+### 🎨 Template System
+
+- **Choose**: Select from a library of pre-built templates
+- **Customize**: Adjust colors, fonts, layout options through TUI
+- **Create**: Advanced users can add custom LaTeX templates
+- **Share**: Export and share your favorite template configurations
+
+### 💾 Output Options
+
+- Professional D&D-styled PDFs using LaTeX
+- Fully offline workflow
+- Compatible with VSCodium/VSCode and Overleaf
+- Export data as JSON/YAML for backup and sharing
 
 ## Technology Stack
 
@@ -105,13 +150,27 @@ Early planning and development phase.
 ### Phase 7: Textual TUI Foundation
 - [ ] Add textual and rich to dependencies
 - [ ] Create basic TUI app structure (App class)
-- [ ] Implement main menu screen with navigation
-- [ ] Add keyboard shortcuts (q=quit, h=help)
-- [ ] Create CSS styling with D&D theme colors
+- [ ] Implement main menu screen with document type selection
+  - Character Sheets
+  - In-World Books (Spellbooks, Guides)
+  - DM Tools (NPCs, Sessions)
+  - Props & Handouts
+  - Custom Templates
+- [ ] Add keyboard shortcuts (q=quit, h=help, arrows=navigation)
+- [ ] Create CSS styling with D&D theme colors (PHB green, parchment)
 - [ ] Write test: TUI launches without errors
 - [ ] Write test: Main menu navigation works
 
-### Phase 8: Character Creation TUI Screens
+### Phase 8: Template Selection System
+- [ ] Design template metadata structure (JSON schema)
+- [ ] Create template registry/catalog
+- [ ] Implement template browser UI (list/grid view)
+- [ ] Add template preview functionality (show description, example)
+- [ ] Add template categories and filtering
+- [ ] Write test: Template registry loads correctly
+- [ ] Write test: Filter templates by category
+
+### Phase 9: Character Creation TUI Screens
 - [ ] Create character creation wizard (multi-screen)
 - [ ] Implement form inputs with validation feedback
 - [ ] Add ability score input screen (with point buy calculator option)
@@ -121,14 +180,44 @@ Early planning and development phase.
 - [ ] Wire up "Generate PDF" button to existing core functions
 - [ ] Write test: Complete character creation flow in TUI
 
-### Phase 9: File Management UI
-- [ ] Add "Load Character" screen with file browser widget
-- [ ] Add "Save Character" dialog
+### Phase 10: File Management UI
+- [ ] Add "Load Document" screen with file browser widget
+- [ ] Add "Save Document" dialog with format selection (JSON/YAML)
 - [ ] Add "Recent Files" list on main screen
 - [ ] Implement drag-and-drop file loading (if supported)
-- [ ] Write test: Save and load character through TUI
+- [ ] Add "Export PDF" and "Export LaTeX" options
+- [ ] Write test: Save and load documents through TUI
 
-### Phase 10: Extended Features - Ledgers & Notes
+### Phase 11: In-World Book Creator (Spellbooks, Guides)
+- [ ] Design book data structure (title, author, chapters, content)
+- [ ] Create LaTeX templates for different book types:
+  - Spell grimoire (e.g., "The Art of Fireball")
+  - Crafting guide (Herbalism, Alchemy, Smithing)
+  - Lore book (History, Religion, Arcana)
+  - Guild manual
+- [ ] Implement rich text editor for book content (markdown-like)
+- [ ] Add chapter/section management UI
+- [ ] Add spell/recipe/item insertion helpers
+- [ ] Create book cover generator with custom titles
+- [ ] Write test: Generate spell book PDF
+- [ ] Write test: Generate crafting guide PDF
+
+### Phase 12: Props & Handouts Creator
+- [ ] Design prop templates:
+  - Wanted poster
+  - Tavern menu
+  - Letter/scroll
+  - Bounty notice
+  - Guild charter
+  - Item card
+- [ ] Create simple form-based UI for props
+- [ ] Add image insertion for prop backgrounds
+- [ ] Implement text formatting (fonts, sizes, styles)
+- [ ] Add border/decoration options
+- [ ] Write test: Generate wanted poster PDF
+- [ ] Write test: Generate tavern menu PDF
+
+### Phase 13: Extended Features - Ledgers & Notes
 - [ ] Design ledger data structure (items, gold, spells)
 - [ ] Create LaTeX template for inventory ledger
 - [ ] Create LaTeX template for spell tracking ledger
@@ -139,31 +228,43 @@ Early planning and development phase.
 - [ ] Add checkbox in TUI: "Include extended notes"
 - [ ] Write test: Generate character sheet with ledgers and notes
 
-### Phase 11: NPC Creator
+### Phase 14: NPC Creator
 - [ ] Design NPC data structure (simplified from PC)
 - [ ] Create simplified NPC stat block LaTeX template
 - [ ] Implement NPC-to-LaTeX converter
 - [ ] Add challenge rating calculator with XP lookup
 - [ ] Create NPC creation screen in TUI
+- [ ] Add NPC personality/motivation generators
 - [ ] Write test: Generate NPC stat block PDF
 
-### Phase 12: DM Session Tools
+### Phase 15: DM Session Tools
 - [ ] Design session data structure
 - [ ] Create session notes LaTeX template
 - [ ] Create encounter planning LaTeX template
 - [ ] Add initiative tracker template
 - [ ] Add "Session Planner" section to TUI main menu
+- [ ] Create session recap generator
 - [ ] Write test: Generate session notes document
 
-### Phase 13: 2024 Rules Support
+### Phase 16: 2024 Rules Support
 - [ ] Research differences between 5e 2014 and 2024 rules
 - [ ] Create LaTeX template for 2024 character sheet
 - [ ] Implement 2024-specific rule adjustments
 - [ ] Add edition selector in TUI (radio button on character creation)
+- [ ] Update in-world books for 2024 rules compatibility
 - [ ] Write test: Generate 2024 character sheet
 - [ ] Write test: Verify 2024-specific fields are correct
 
-### Phase 14: TUI Polish & User Experience
+### Phase 17: Template Marketplace & Sharing
+- [ ] Design template package format (.dndtemplate files)
+- [ ] Create template import/export functionality
+- [ ] Add template metadata editor (description, author, preview image)
+- [ ] Implement template validation and safety checks
+- [ ] Add "Browse Community Templates" screen
+- [ ] Write test: Import/export custom template
+- [ ] Create documentation for template creators
+
+### Phase 18: TUI Polish & User Experience
 - [ ] Add comprehensive keyboard shortcuts (F1=help screen)
 - [ ] Implement multiple color themes (PHB green, DMG coral, etc.)
 - [ ] Add tooltips/help text for all form fields
@@ -174,17 +275,22 @@ Early planning and development phase.
 - [ ] Write test: Keyboard shortcuts work correctly
 - [ ] Write test: Settings persist between sessions
 
-### Phase 15: Documentation & Polish
+### Phase 19: Documentation & Polish
 - [ ] Write installation guide (INSTALL.md)
 - [ ] Create example usage documentation with TUI screenshots
 - [ ] Add man page for TUI application
-- [ ] Create comprehensive example character/NPC files library
+- [ ] Create comprehensive example files library:
+  - Character sheets
+  - Spell books
+  - Props and handouts
+  - NPC stat blocks
 - [ ] Add troubleshooting guide (common LaTeX errors, etc.)
-- [ ] Create video/GIF demo of TUI for README
+- [ ] Create video/GIF demos of TUI for README
 - [ ] Write integration tests for end-to-end workflows
-- [ ] Add contributing guide for new character sheet templates
+- [ ] Add contributing guide for template creators
+- [ ] Create template development tutorial
 
-### Phase 16: Distribution
+### Phase 20: Distribution
 - [ ] Create installation script
 - [ ] Package for distribution (pip/cargo/apt)
 - [ ] Add version checking
