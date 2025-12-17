@@ -1,0 +1,145 @@
+\documentclass[letterpaper,twocolumn,openany]{dndbook}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+
+\title{Character Sheet Example}
+\author{Grimnar Ironforge}
+\date{}
+
+\begin{document}
+
+\chapter*{Grimnar Ironforge}
+\addcontentsline{toc}{chapter}{Grimnar Ironforge}
+
+\section*{Character Details}
+
+\begin{DndTable}[header=Basic Information]{lX}
+    \textbf{Class} & Fighter \\
+    \textbf{Level} & 5 \\
+    \textbf{Race} & Mountain Dwarf \\
+    \textbf{Background} & Soldier \\
+    \textbf{Alignment} & Lawful Good \\
+\end{DndTable}
+
+\section*{Ability Scores}
+
+\begin{DndTable}[header=Ability Scores]{lcccc}
+    \textbf{Ability} & \textbf{Score} & \textbf{Modifier} & \textbf{Save} & \textbf{Prof?} \\
+    Strength     & 18 & +4 & +7 & Yes \\
+    Dexterity    & 14 & +2 & +2 & No \\
+    Constitution & 16 & +3 & +6 & Yes \\
+    Intelligence & 10 & +0 & +0 & No \\
+    Wisdom       & 12 & +1 & +1 & No \\
+    Charisma     & 8  & -1 & -1 & No \\
+\end{DndTable}
+
+\begin{DndComment}{Proficiency Bonus}
+    At level 5, the proficiency bonus is \textbf{+3}.
+
+    This applies to: Attack rolls with proficient weapons, Saving throws (STR, CON), and proficient skills.
+\end{DndComment}
+
+\section*{Combat Stats}
+
+\begin{DndTable}[header=Combat]{lX}
+    \textbf{Armor Class} & 18 (plate armor) \\
+    \textbf{Initiative} & +2 \\
+    \textbf{Speed} & 25 ft. (Dwarf reduced speed) \\
+    \textbf{Hit Points} & 47 (5d10 + 15) \\
+    \textbf{Hit Dice} & 5d10 \\
+\end{DndTable}
+
+\section*{Skills}
+
+\begin{DndTable}[header=Proficient Skills]{lc}
+    \textbf{Skill} & \textbf{Bonus} \\
+    Athletics (STR) & +7 \\
+    Intimidation (CHA) & +2 \\
+    Perception (WIS) & +4 \\
+    Survival (WIS) & +4 \\
+\end{DndTable}
+
+\section*{Features \& Traits}
+
+\subsection*{Racial Traits (Mountain Dwarf)}
+
+\begin{itemize}
+    \item \textbf{Darkvision:} 60 feet
+    \item \textbf{Dwarven Resilience:} Advantage on saves vs. poison, resistance to poison damage
+    \item \textbf{Dwarven Armor Training:} Proficiency with light and medium armor
+    \item \textbf{Tool Proficiency:} Smith's tools
+    \item \textbf{Stonecunning:} Double proficiency on History checks related to stonework
+\end{itemize}
+
+\subsection*{Class Features (Fighter)}
+
+\begin{itemize}
+    \item \textbf{Fighting Style:} Defense (+1 AC while wearing armor)
+    \item \textbf{Second Wind:} Bonus action to regain 1d10+5 HP (once per short rest)
+    \item \textbf{Action Surge:} Take an additional action (once per short rest)
+    \item \textbf{Extra Attack:} Attack twice when taking the Attack action
+    \item \textbf{Martial Archetype:} Battle Master
+\end{itemize}
+
+\subsection*{Battle Master Maneuvers}
+
+\begin{DndSidebar}{Superiority Dice}
+    You have \textbf{4 superiority dice} (d8).
+
+    You regain all expended superiority dice when you finish a short or long rest.
+\end{DndSidebar}
+
+\textbf{Known Maneuvers:}
+\begin{itemize}
+    \item \textbf{Riposte:} When a creature misses you with a melee attack, use reaction to make a melee weapon attack, add superiority die to damage
+    \item \textbf{Precision Attack:} Add superiority die to attack roll
+    \item \textbf{Trip Attack:} Add superiority die to damage, target makes STR save (DC 15) or is knocked prone
+\end{itemize}
+
+\section*{Equipment}
+
+\subsection*{Weapons}
+
+\begin{DndTable}[header=Weapons]{lccX}
+    \textbf{Weapon} & \textbf{Attack} & \textbf{Damage} & \textbf{Properties} \\
+    Battleaxe & +7 & 1d8+4 slashing & Versatile (1d10) \\
+    Handaxe & +7 & 1d6+4 slashing & Light, thrown (20/60) \\
+\end{DndTable}
+
+\subsection*{Armor \& Gear}
+
+\begin{itemize}
+    \item Plate armor (AC 18)
+    \item Shield (AC +2, not currently equipped)
+    \item Backpack
+    \item Bedroll
+    \item Mess kit
+    \item Tinderbox
+    \item 10 torches
+    \item 10 days of rations
+    \item Waterskin
+    \item 50 ft. hempen rope
+    \item Smith's tools
+\end{itemize}
+
+\section*{Personality}
+
+\begin{DndReadAloud}
+    Grimnar is a battle-hardened warrior with a strong sense of duty and honor. He speaks little but acts decisively. His loyalty to his comrades is absolute, and he would lay down his life to protect them.
+\end{DndReadAloud}
+
+\begin{DndTable}[header=Personality Traits]{lX}
+    \textbf{Trait} & I'm always polite and respectful. \\
+    \textbf{Ideal} & Greater Good. Our lot is to lay down our lives in defense of others. \\
+    \textbf{Bond} & I would still lay down my life for the people I served with. \\
+    \textbf{Flaw} & I obey authority without question, even when I disagree. \\
+\end{DndTable}
+
+\section*{Wealth}
+
+\textbf{Gold:} 157 gp \\
+\textbf{Silver:} 23 sp \\
+\textbf{Copper:} 8 cp
+
+\end{document}

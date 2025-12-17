@@ -1,0 +1,206 @@
+\documentclass[letterpaper,twocolumn,openany]{dndbook}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+
+\title{NPC Stat Blocks}
+\author{DM Notes}
+\date{}
+
+\begin{document}
+
+\chapter*{Example NPCs}
+
+\section{Friendly NPCs}
+
+\begin{DndMonster}{Elara Moonwhisper}
+    \DndMonsterType{Medium humanoid (elf), neutral good}
+
+    \DndMonsterBasics[
+        armor-class = {12 (15 with \emph{mage armor})},
+        hit-points  = {\DndDice{6d8 + 6}},
+        speed       = {30 ft.},
+    ]
+
+    \DndMonsterAbilityScores[
+        str = 8,
+        dex = 14,
+        con = 12,
+        int = 17,
+        wis = 13,
+        cha = 11,
+    ]
+
+    \DndMonsterDetails[
+        saving-throws = {Int +6, Wis +4},
+        skills = {Arcana +6, History +6, Investigation +6},
+        senses = {darkvision 60 ft., passive Perception 11},
+        languages = {Common, Elvish, Draconic, Sylvan},
+        challenge = 3,
+    ]
+
+    \DndMonsterAction{Spellcasting}
+    Elara is a 6th-level spellcaster. Her spellcasting ability is Intelligence (spell save DC 14, +6 to hit with spell attacks). She has the following wizard spells prepared:
+
+    \begin{DndMonsterSpells}
+        \DndMonsterSpellLevel{fire bolt, light, mage hand, prestidigitation}
+        \DndMonsterSpellLevel[1][4]{detect magic, mage armor, magic missile, shield}
+        \DndMonsterSpellLevel[2][3]{misty step, scorching ray, suggestion}
+        \DndMonsterSpellLevel[3][3]{counterspell, fireball, fly}
+    \end{DndMonsterSpells}
+
+    \DndMonsterAction{Quarterstaff}
+    \emph{Melee Weapon Attack:} +1 to hit, reach 5 ft., one target.
+    \emph{Hit:} 2 (1d6 - 1) bludgeoning damage, or 3 (1d8 - 1) bludgeoning damage if used with two hands.
+
+    \DndMonsterSection{Description}
+    Elara is a wise and studious elf wizard who runs an arcane library in the city. She is knowledgeable about ancient history and magical artifacts. She wears simple robes and carries a gnarled oak staff.
+\end{DndMonster}
+
+\section{Hostile NPCs}
+
+\begin{DndMonster}{Captain Blackthorn}
+    \DndMonsterType{Medium humanoid (human), lawful evil}
+
+    \DndMonsterBasics[
+        armor-class = {18 (plate armor)},
+        hit-points  = {\DndDice{11d8 + 33}},
+        speed       = {30 ft.},
+    ]
+
+    \DndMonsterAbilityScores[
+        str = 18,
+        dex = 12,
+        con = 16,
+        int = 11,
+        wis = 14,
+        cha = 15,
+    ]
+
+    \DndMonsterDetails[
+        saving-throws = {Str +7, Con +6},
+        skills = {Athletics +7, Intimidation +5, Perception +5},
+        senses = {passive Perception 15},
+        languages = {Common, Orc},
+        challenge = 5,
+    ]
+
+    \DndMonsterAction{Multiattack}
+    Captain Blackthorn makes three attacks with his longsword.
+
+    \DndMonsterMelee[
+        name=Longsword,
+        mod=+7,
+        reach=5,
+        targets=one target,
+        dmg=\DndDice{1d8+4},
+        dmg-type=slashing,
+        or-dmg=\DndDice{1d10+4},
+        or-dmg-when=if used with two hands,
+    ]
+
+    \DndMonsterAction{Indomitable (2/Day)}
+    Captain Blackthorn can reroll a saving throw that he fails. He must use the new roll.
+
+    \DndMonsterAction{Second Wind (Recharges after a Short or Long Rest)}
+    As a bonus action, Captain Blackthorn can regain 1d10 + 11 hit points.
+
+    \DndMonsterSection{Description}
+    A cruel and battle-scarred veteran who leads a mercenary company. He wears blackened plate armor and wields a notched longsword. His reputation for ruthlessness precedes him.
+\end{DndMonster}
+
+\begin{DndMonster}{Goblin Scout}
+    \DndMonsterType{Small humanoid (goblinoid), neutral evil}
+
+    \DndMonsterBasics[
+        armor-class = {13 (leather armor)},
+        hit-points  = {\DndDice{2d6}},
+        speed       = {30 ft.},
+    ]
+
+    \DndMonsterAbilityScores[
+        str = 8,
+        dex = 14,
+        con = 10,
+        int = 10,
+        wis = 8,
+        cha = 8,
+    ]
+
+    \DndMonsterDetails[
+        skills = {Stealth +6},
+        senses = {darkvision 60 ft., passive Perception 9},
+        languages = {Common, Goblin},
+        challenge = {1/4},
+    ]
+
+    \DndMonsterAction{Nimble Escape}
+    The goblin can take the Disengage or Hide action as a bonus action on each of its turns.
+
+    \DndMonsterSection{Actions}
+
+    \DndMonsterMelee[
+        name=Scimitar,
+        mod=+4,
+        reach=5,
+        targets=one target,
+        dmg=\DndDice{1d6+2},
+        dmg-type=slashing,
+    ]
+
+    \DndMonsterRanged[
+        name=Shortbow,
+        mod=+4,
+        range=80/320,
+        targets=one target,
+        dmg=\DndDice{1d6+2},
+        dmg-type=piercing,
+    ]
+
+    \DndMonsterSection{Description}
+    A sneaky goblin wearing patched leather armor. Often found scouting ahead for larger raiding parties.
+\end{DndMonster}
+
+\section{Neutral NPCs}
+
+\begin{DndReadAloud}
+    These NPCs can serve as merchants, quest givers, or information sources for the party.
+\end{DndReadAloud}
+
+\begin{DndMonster}{Grimble Tinkertop}
+    \DndMonsterType{Small humanoid (gnome), neutral}
+
+    \DndMonsterBasics[
+        armor-class = {11},
+        hit-points  = {\DndDice{3d6 + 3}},
+        speed       = {25 ft.},
+    ]
+
+    \DndMonsterAbilityScores[
+        str = 6,
+        dex = 12,
+        con = 12,
+        int = 16,
+        wis = 14,
+        cha = 10,
+    ]
+
+    \DndMonsterDetails[
+        skills = {Arcana +5, Investigation +5, Perception +4},
+        senses = {darkvision 60 ft., passive Perception 14},
+        languages = {Common, Gnomish, Dwarvish},
+        challenge = {1/8},
+    ]
+
+    \DndMonsterAction{Gnome Cunning}
+    Grimble has advantage on all Intelligence, Wisdom, and Charisma saving throws against magic.
+
+    \DndMonsterAction{Dagger}
+    \emph{Melee or Ranged Weapon Attack:} +3 to hit, reach 5 ft. or range 20/60 ft., one target.
+    \emph{Hit:} 3 (1d4 + 1) piercing damage.
+
+    \DndMonsterSection{Description}
+    An eccentric gnome inventor who runs a curiosity shop. He collects magical trinkets and can identify most magic items for a fee. He has wild gray hair and always wears goggles covered in different colored lenses.
+\end{DndMonster}
+
+\end{document}
