@@ -55,6 +55,12 @@ def main() -> int:
         help="Check LaTeX environment and dependencies",
     )
 
+    # TUI command for Phase 7
+    tui_parser = subparsers.add_parser(
+        "tui",
+        help="Launch the interactive Terminal User Interface",
+    )
+
     args = parser.parse_args()
 
     if args.command is None:
@@ -114,6 +120,10 @@ def main() -> int:
         else:
             print(f"✗ {message}")
             return 1
+
+    if args.command == "tui":
+        from .tui.app import main as tui_main
+        return tui_main()
 
     if args.command == "check":
         from .latex_env import check_environment, get_installation_instructions
