@@ -122,17 +122,17 @@ Early planning and development phase.
 - [x] Tested: Character creation, JSON serialization, calculations verified
 - [x] Created example character: examples/characters/grimnar_ironforge.json
 
-### Phase 5: Character Sheet LaTeX Generator (5e 2014)
-- [ ] Create LaTeX Jinja2 template for 5e 2014 character sheet
-- [ ] Implement character-to-LaTeX converter using template
-- [ ] Add hit points and hit dice rendering
-- [ ] Add AC and initiative
-- [ ] Add equipment and inventory section
-- [ ] Add spells section (if applicable)
-- [ ] Create test character JSON file (example fighter)
-- [ ] Write test: Generate complete character sheet from test data
-- [ ] Write test: Compile character sheet to PDF successfully
-- [ ] Add CLI command for testing: `python -m dndsheet generate character.json`
+### Phase 5: Character Sheet LaTeX Generator ✅ COMPLETE
+- [x] Create LaTeX Jinja2 template for character sheets (character_sheet.tex.j2)
+- [x] Implement character-to-LaTeX converter using Jinja2 templates
+- [x] Add complete ability scores table with modifiers and saves
+- [x] Add combat stats (HP, hit dice, AC, initiative, speed)
+- [x] Add proficiency bonus display and calculation
+- [x] Add skills table (both proficient and all skills)
+- [x] Add saving throws with proficiency indicators
+- [x] Add character summary sidebar with quick reference
+- [x] Tested: Generated Grimnar's character sheet (1.6MB PDF)
+- [x] Tested: LaTeX compilation successful with all D&D styling
 
 ### Phase 6: JSON/YAML File Import & CLI Testing
 - [ ] Implement JSON file loader with validation

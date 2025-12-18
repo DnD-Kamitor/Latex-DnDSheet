@@ -1,0 +1,91 @@
+\documentclass[letterpaper,twocolumn,openany]{dndbook}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+
+\title{ {{ character.name }} }
+\author{ {{ character.player_name or "Player" }} }
+\date{}
+
+\begin{document}
+
+\chapter*{ {{ character.name }} }
+\addcontentsline{toc}{chapter}{ {{ character.name }} }
+
+\section*{Character Details}
+
+\begin{DndTable}[header=Basic Information]{lX}
+    \textbf{Class} & {{ character.character_class }} \\
+    \textbf{Level} & {{ character.level }} \\
+    \textbf{Race} & {{ character.race }} \\
+{% if character.background %}    \textbf{Background} & {{ character.background }} \\
+{% endif %}{% if character.alignment %}    \textbf{Alignment} & {{ character.alignment }} \\
+{% endif %}{% if character.experience_points > 0 %}    \textbf{Experience} & {{ "{:,}".format(character.experience_points) }} XP \\
+{% endif %}\end{DndTable}
+
+\section*{Ability Scores}
+
+\begin{DndTable}[header=Ability Scores]{lcccc}
+    \textbf{Ability} & \textbf{Score} & \textbf{Modifier} & \textbf{Save} & \textbf{Prof?} \\
+    Strength     & {{ character.ability_scores.strength }} & {{ "%+d"|format(character.ability_scores.strength_modifier) }} & {{ "%+d"|format(character.get_saving_throw(Ability.STRENGTH)) }} & {% if Ability.STRENGTH in character.saving_throw_proficiencies %}Yes{% else %}No{% endif %} \\
+    Dexterity    & {{ character.ability_scores.dexterity }} & {{ "%+d"|format(character.ability_scores.dexterity_modifier) }} & {{ "%+d"|format(character.get_saving_throw(Ability.DEXTERITY)) }} & {% if Ability.DEXTERITY in character.saving_throw_proficiencies %}Yes{% else %}No{% endif %} \\
+    Constitution & {{ character.ability_scores.constitution }} & {{ "%+d"|format(character.ability_scores.constitution_modifier) }} & {{ "%+d"|format(character.get_saving_throw(Ability.CONSTITUTION)) }} & {% if Ability.CONSTITUTION in character.saving_throw_proficiencies %}Yes{% else %}No{% endif %} \\
+    Intelligence & {{ character.ability_scores.intelligence }} & {{ "%+d"|format(character.ability_scores.intelligence_modifier) }} & {{ "%+d"|format(character.get_saving_throw(Ability.INTELLIGENCE)) }} & {% if Ability.INTELLIGENCE in character.saving_throw_proficiencies %}Yes{% else %}No{% endif %} \\
+    Wisdom       & {{ character.ability_scores.wisdom }} & {{ "%+d"|format(character.ability_scores.wisdom_modifier) }} & {{ "%+d"|format(character.get_saving_throw(Ability.WISDOM)) }} & {% if Ability.WISDOM in character.saving_throw_proficiencies %}Yes{% else %}No{% endif %} \\
+    Charisma     & {{ character.ability_scores.charisma }} & {{ "%+d"|format(character.ability_scores.charisma_modifier) }} & {{ "%+d"|format(character.get_saving_throw(Ability.CHARISMA)) }} & {% if Ability.CHARISMA in character.saving_throw_proficiencies %}Yes{% else %}No{% endif %} \\
+\end{DndTable}
+
+\begin{DndComment}{Proficiency Bonus}
+    At level {{ character.level }}, the proficiency bonus is \textbf{ {{ "%+d"|format(character.proficiency_bonus) }} }.
+
+    This applies to: Attack rolls with proficient weapons{% if character.saving_throw_proficiencies %}, Saving throws ({% for ability in character.saving_throw_proficiencies %}{{ ability.value.upper()[:3] }}{% if not loop.last %}, {% endif %}{% endfor %}){% endif %}{% if character.skill_proficiencies %}, and proficient skills{% endif %}.
+\end{DndComment}
+
+\section*{Combat Stats}
+
+\begin{DndTable}[header=Combat]{lX}
+    \textbf{Armor Class} & {{ character.armor_class }} \\
+    \textbf{Initiative} & {{ "%+d"|format(character.initiative) }} \\
+    \textbf{Speed} & {{ character.speed }} ft. \\
+    \textbf{Hit Points} & {{ character.current_hit_points }}/{{ character.max_hit_points }}{% if character.temporary_hit_points > 0 %} (+{{ character.temporary_hit_points }} temp){% endif %} \\
+    \textbf{Hit Dice} & {{ character.hit_dice }} \\
+{% if character.inspiration %}    \textbf{Inspiration} & Yes \\
+{% endif %}\end{DndTable}
+
+{% if character.skill_proficiencies %}\section*{Skills}
+
+\begin{DndTable}[header=Proficient Skills]{lcc}
+    \textbf{Skill} & \textbf{Ability} & \textbf{Bonus} \\
+{% for skill in character.skill_proficiencies %}    {{ skill.value.replace("_", " ").title() }} & {{ SKILL_ABILITIES[skill].value.upper()[:3] }} & {{ "%+d"|format(character.get_skill_modifier(skill)) }} \\
+{% endfor %}\end{DndTable}
+
+{% endif %}\section*{All Skills}
+
+\begin{DndTable}[header=All Skills (including non-proficient)]{lcc}
+    \textbf{Skill} & \textbf{Ability} & \textbf{Bonus} \\
+{% for skill in ALL_SKILLS %}    {{ skill.value.replace("_", " ").title() }}{% if skill in character.skill_proficiencies %}*{% endif %} & {{ SKILL_ABILITIES[skill].value.upper()[:3] }} & {{ "%+d"|format(character.get_skill_modifier(skill)) }} \\
+{% endfor %}\end{DndTable}
+
+\begin{DndComment}{Skill Proficiencies}
+    Skills marked with * are proficient and include the proficiency bonus of {{ "%+d"|format(character.proficiency_bonus) }}.
+\end{DndComment}
+
+\section*{Character Summary}
+
+\begin{DndSidebar}{Quick Reference}
+    \textbf{Name:} {{ character.name }}
+
+    \textbf{Level {{ character.level }} {{ character.race }} {{ character.character_class }}}
+{% if character.background %}
+    \textbf{Background:} {{ character.background }}
+{% endif %}{% if character.alignment %}
+    \textbf{Alignment:} {{ character.alignment }}
+{% endif %}
+    \textbf{AC:} {{ character.armor_class }} \quad \textbf{Initiative:} {{ "%+d"|format(character.initiative) }}
+
+    \textbf{HP:} {{ character.current_hit_points }}/{{ character.max_hit_points }} \quad \textbf{Speed:} {{ character.speed }} ft.
+
+    \textbf{Proficiency:} {{ "%+d"|format(character.proficiency_bonus) }}
+\end{DndSidebar}
+
+\end{document}
