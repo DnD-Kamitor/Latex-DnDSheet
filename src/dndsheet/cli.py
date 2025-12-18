@@ -62,8 +62,58 @@ def main() -> int:
         return 0
 
     if args.command == "generate":
-        print(f"Generate command not yet implemented. Input: {args.input_file}")
-        return 1
+        from .character import Character
+        from .sheet_generator import generate_and_compile_character_sheet
+
+        # Check if input file exists
+        if not args.input_file.exists():
+            print(f"✗ Error: File not found: {args.input_file}")
+            return 1
+
+        # Load character from file
+        try:
+            if args.verbose:
+                print(f"Loading character from {args.input_file}...")
+
+            character = Character.from_json(args.input_file)
+
+            if args.verbose:
+                print(f"✓ Loaded: {character.name} (Level {character.level} {character.character_class})")
+        except Exception as e:
+            print(f"✗ Error loading character file: {e}")
+            return 1
+
+        # Determine output directory
+        if args.output:
+            output_dir = args.output.parent
+            output_dir.mkdir(parents=True, exist_ok=True)
+        else:
+            output_dir = Path("output")
+
+        # Generate character sheet
+        if args.verbose:
+            print(f"Generating character sheet for {character.name}...")
+
+        success, message, pdf_path = generate_and_compile_character_sheet(
+            character,
+            output_dir=output_dir,
+        )
+
+        if success:
+            # Move to specified output path if provided
+            if args.output and pdf_path:
+                import shutil
+                shutil.move(str(pdf_path), str(args.output))
+                pdf_path = args.output
+
+            print(f"✓ {message}")
+            if pdf_path:
+                print(f"  Output: {pdf_path.absolute()}")
+                print(f"  Size: {pdf_path.stat().st_size:,} bytes")
+            return 0
+        else:
+            print(f"✗ {message}")
+            return 1
 
     if args.command == "check":
         from .latex_env import check_environment, get_installation_instructions

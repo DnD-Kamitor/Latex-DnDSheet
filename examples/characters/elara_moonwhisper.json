@@ -1,0 +1,36 @@
+{
+  "name": "Elara Moonwhisper",
+  "player_name": "Example Player",
+  "race": "High Elf",
+  "class": "Wizard",
+  "level": 3,
+  "background": "Sage",
+  "alignment": "Neutral Good",
+  "ability_scores": {
+    "strength": 8,
+    "dexterity": 14,
+    "constitution": 13,
+    "intelligence": 17,
+    "wisdom": 12,
+    "charisma": 10
+  },
+  "skill_proficiencies": [
+    "arcana",
+    "history",
+    "investigation",
+    "insight"
+  ],
+  "saving_throw_proficiencies": [
+    "intelligence",
+    "wisdom"
+  ],
+  "armor_class": 12,
+  "initiative_bonus": null,
+  "speed": 30,
+  "max_hit_points": 16,
+  "current_hit_points": 16,
+  "temporary_hit_points": 0,
+  "hit_dice": "3d6",
+  "inspiration": false,
+  "experience_points": 900
+}
