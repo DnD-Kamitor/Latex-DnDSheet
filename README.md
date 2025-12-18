@@ -100,13 +100,14 @@ Early planning and development phase.
 - [x] Add error handling with helpful messages for missing dependencies
 - [ ] Write automated tests (deferred - manual testing confirmed working)
 
-### Phase 3: Minimal LaTeX Generation (Proof of Concept)
-- [ ] Study DND-5e-LaTeX-Template example.tex structure
-- [ ] Create minimal .tex file generator (hardcoded test data)
-- [ ] Write function to compile .tex to PDF (subprocess lualatex)
-- [ ] Write test: Generate minimal DnD document
-- [ ] Write test: Verify PDF output file exists and is valid
-- [ ] Add cleanup of auxiliary LaTeX files (.aux, .log, etc.)
+### Phase 3: Minimal LaTeX Generation ✅ COMPLETE
+- [x] Study DND-5e-LaTeX-Template example.tex structure
+- [x] Create minimal .tex file generator (generate_tex_file function)
+- [x] Write function to compile .tex to PDF (compile_to_pdf with two-pass compilation)
+- [x] Implement automatic template path detection with TEXINPUTS
+- [x] Write test: Generate minimal DnD document
+- [x] Write test: Verify PDF output file exists and is valid
+- [x] Add cleanup of auxiliary LaTeX files (.aux, .log, etc.)
 
 ### Phase 4: Character Data Model
 - [ ] Design character data structure (Python dataclass or Pydantic)
