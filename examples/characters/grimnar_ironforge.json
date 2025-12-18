@@ -1,0 +1,36 @@
+{
+  "name": "Grimnar Ironforge",
+  "player_name": "Example Player",
+  "race": "Mountain Dwarf",
+  "class": "Fighter",
+  "level": 5,
+  "background": "Soldier",
+  "alignment": "Lawful Good",
+  "ability_scores": {
+    "strength": 16,
+    "dexterity": 14,
+    "constitution": 15,
+    "intelligence": 10,
+    "wisdom": 12,
+    "charisma": 8
+  },
+  "skill_proficiencies": [
+    "athletics",
+    "intimidation",
+    "perception",
+    "survival"
+  ],
+  "saving_throw_proficiencies": [
+    "strength",
+    "constitution"
+  ],
+  "armor_class": 18,
+  "initiative_bonus": null,
+  "speed": 25,
+  "max_hit_points": 42,
+  "current_hit_points": 42,
+  "temporary_hit_points": 0,
+  "hit_dice": "5d10",
+  "inspiration": false,
+  "experience_points": 6500
+}

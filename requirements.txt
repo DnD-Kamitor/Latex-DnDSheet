@@ -1,0 +1,23 @@
+# Core dependencies
+# Note: These match the versions in pyproject.toml
+
+# Optional: Use system packages if available (python3-pydantic, python3-yaml)
+# Or install in a virtual environment with: python3 -m venv venv && source venv/bin/activate
+
+# Template engine for LaTeX generation
+jinja2>=3.1.0
+
+# Data validation (Pydantic v2+ preferred, but code also works with Python dataclasses)
+pydantic>=2.0.0
+
+# YAML support for character data files
+pyyaml>=6.0.0
+
+# Development dependencies
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# TUI dependencies (Phase 7+)
+# Uncomment when needed:
+# textual>=0.47.0
+# rich>=13.0.0

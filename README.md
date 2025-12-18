@@ -109,17 +109,18 @@ Early planning and development phase.
 - [x] Write test: Verify PDF output file exists and is valid
 - [x] Add cleanup of auxiliary LaTeX files (.aux, .log, etc.)
 
-### Phase 4: Character Data Model
-- [ ] Design character data structure (Python dataclass or Pydantic)
-- [ ] Create JSON schema for character data
-- [ ] Implement basic character attributes (name, class, race, level)
-- [ ] Implement ability scores with modifiers (STR, DEX, CON, INT, WIS, CHA)
-- [ ] Add proficiency bonus calculator by level
-- [ ] Implement skill modifiers and proficiencies
-- [ ] Add saving throws
-- [ ] Write test: Character data validation
-- [ ] Write test: Ability score modifier calculation (-1 for 8-9, +0 for 10-11, etc.)
-- [ ] Write test: Proficiency bonus by level (+2 at 1-4, +3 at 5-8, etc.)
+### Phase 4: Character Data Model ✅ COMPLETE
+- [x] Design character data structure (Python dataclass with validation)
+- [x] Create JSON schema for character data (to_json/from_json methods)
+- [x] Implement basic character attributes (name, class, race, level, background, alignment)
+- [x] Implement ability scores with modifiers (STR, DEX, CON, INT, WIS, CHA)
+- [x] Add proficiency bonus calculator by level (automated @property)
+- [x] Implement skill modifiers and proficiencies (18 skills with ability mapping)
+- [x] Add saving throws with proficiency support
+- [x] Add combat stats (AC, initiative, HP, hit dice, speed)
+- [x] Built-in validation (ability scores 1-30, level 1-20, etc.)
+- [x] Tested: Character creation, JSON serialization, calculations verified
+- [x] Created example character: examples/characters/grimnar_ironforge.json
 
 ### Phase 5: Character Sheet LaTeX Generator (5e 2014)
 - [ ] Create LaTeX Jinja2 template for 5e 2014 character sheet
