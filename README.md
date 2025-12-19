@@ -176,14 +176,22 @@ Early planning and development phase.
 pip install textual>=0.47.0 rich>=13.0.0
 ```
 
-### Phase 8: Template Selection System
-- [ ] Design template metadata structure (JSON schema)
-- [ ] Create template registry/catalog
-- [ ] Implement template browser UI (list/grid view)
-- [ ] Add template preview functionality (show description, example)
-- [ ] Add template categories and filtering
-- [ ] Write test: Template registry loads correctly
-- [ ] Write test: Filter templates by category
+### Phase 8: File Browser & Character Loading (TUI) ✅ COMPLETE
+- [x] Create file browser widget using DirectoryTree
+- [x] Implement CharacterFileLoadScreen with file selection
+- [x] Connect file browser to character loading
+- [x] Integrate with PDF generation backend
+- [x] Add notification system for success/error feedback
+- [x] Filter to show only .json files as selectable
+- [x] Create docs/TUI_USAGE.md with instructions
+- [x] Test workflow: Browse → Select → Generate PDF
+
+**Working Features**:
+- ✓ Browse file system in TUI
+- ✓ Select character JSON files
+- ✓ Generate PDFs directly from TUI
+- ✓ Visual feedback with notifications
+- ✓ Fully integrated with existing backend
 
 ### Phase 9: Character Creation TUI Screens
 - [ ] Create character creation wizard (multi-screen)

@@ -34,6 +34,9 @@ def main() -> int:
     from textual.widgets import Static, Button
     from textual.screen import Screen
 
+    # Import functional screens
+    from .screens import CharacterFileLoadScreen
+
     class MainMenuScreen(Screen):
         """Main menu screen for document type selection."""
 
@@ -123,35 +126,6 @@ def main() -> int:
                 # Placeholder for other features
                 self.app.notify(f"Feature not yet implemented: {button_id}", severity="warning")
 
-    class CharacterLoadScreen(Screen):
-        """Screen for loading a character from a JSON file."""
-
-        CSS = """
-        CharacterLoadScreen {
-            align: center middle;
-        }
-
-        #load-container {
-            width: 80;
-            height: auto;
-            border: solid $primary;
-            background: $surface;
-            padding: 2;
-        }
-        """
-
-        def compose(self) -> ComposeResult:
-            """Create widgets for the character load screen."""
-            with Container(id="load-container"):
-                yield Static("📂 Load Character from File", id="title")
-                yield Static("This feature will be implemented in Phase 8", classes="subtitle")
-                yield Button("← Back to Main Menu", id="btn-back", variant="primary")
-
-        def on_button_pressed(self, event: Button.Pressed) -> None:
-            """Handle button press."""
-            if event.button.id == "btn-back":
-                self.app.pop_screen()
-
     class CharacterCreateScreen(Screen):
         """Screen for creating a new character."""
 
@@ -238,7 +212,7 @@ def main() -> int:
 
         SCREENS = {
             "main": MainMenuScreen,
-            "character_load": CharacterLoadScreen,
+            "character_load": CharacterFileLoadScreen,
             "character_create": CharacterCreateScreen,
             "settings": SettingsScreen,
         }
