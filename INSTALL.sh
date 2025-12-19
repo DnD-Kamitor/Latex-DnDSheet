@@ -15,8 +15,11 @@ if [ "$EUID" -eq 0 ]; then
 fi
 
 # Step 1: Install python3-venv if not available
-if ! python3 -c "import venv" 2>/dev/null; then
+# Check if we can actually create a venv (not just import the module)
+if ! python3 -c "import ensurepip" 2>/dev/null; then
     echo "📦 Installing python3-venv (requires sudo)..."
+    echo "You will be asked for your password to install system packages."
+    echo ""
     sudo apt update
     sudo apt install -y python3.11-venv
     echo "✓ python3-venv installed"
@@ -29,6 +32,9 @@ if [ ! -f "venv/bin/activate" ]; then
     rm -rf venv  # Remove any incomplete venv
     python3 -m venv venv
     echo "✓ Virtual environment created"
+    echo ""
+else
+    echo "✓ Virtual environment already exists"
     echo ""
 fi
 
