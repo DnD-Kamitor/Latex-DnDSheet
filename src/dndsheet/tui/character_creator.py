@@ -206,6 +206,115 @@ if TEXTUAL_AVAILABLE:
                     "alignment": self.query_one("#select-alignment", Select).value or None,
                 }
 
+                # Move to skills selection screen
+                self.app.push_screen(CharacterSkillsScreen(self.character_data))
+
+
+    class CharacterSkillsScreen(Screen):
+        """Skills and proficiency selection."""
+
+        CSS = """
+        CharacterSkillsScreen {
+            align: center middle;
+        }
+
+        #create-container {
+            width: 80;
+            height: 85%;
+            border: solid $primary;
+            background: $surface;
+            padding: 2;
+        }
+
+        #title {
+            text-align: center;
+            color: $accent;
+            text-style: bold;
+            margin-bottom: 1;
+        }
+
+        SelectionList {
+            height: 1fr;
+            border: solid $primary;
+            margin: 1;
+        }
+
+        #button-bar {
+            margin-top: 1;
+            height: auto;
+        }
+
+        Button {
+            margin: 0 1;
+        }
+        """
+
+        def __init__(self, character_data: dict):
+            super().__init__()
+            self.character_data = character_data
+
+        def compose(self) -> ComposeResult:
+            """Create the skills selection screen."""
+            with Container(id="create-container"):
+                yield Static("✨ Create New Character - Step 2: Skills & Proficiencies", id="title")
+                yield Static("Select skills your character is proficient in:", classes="form-label")
+
+                # Skills selection list
+                skills_options = [
+                    ("Acrobatics (DEX)", "acrobatics"),
+                    ("Animal Handling (WIS)", "animal_handling"),
+                    ("Arcana (INT)", "arcana"),
+                    ("Athletics (STR)", "athletics"),
+                    ("Deception (CHA)", "deception"),
+                    ("History (INT)", "history"),
+                    ("Insight (WIS)", "insight"),
+                    ("Intimidation (CHA)", "intimidation"),
+                    ("Investigation (INT)", "investigation"),
+                    ("Medicine (WIS)", "medicine"),
+                    ("Nature (INT)", "nature"),
+                    ("Perception (WIS)", "perception"),
+                    ("Performance (CHA)", "performance"),
+                    ("Persuasion (CHA)", "persuasion"),
+                    ("Religion (INT)", "religion"),
+                    ("Sleight of Hand (DEX)", "sleight_of_hand"),
+                    ("Stealth (DEX)", "stealth"),
+                    ("Survival (WIS)", "survival"),
+                ]
+
+                yield SelectionList(*skills_options, id="skills-list")
+
+                yield Static("Select saving throw proficiencies:", classes="form-label")
+
+                saving_throws = [
+                    ("Strength", "strength"),
+                    ("Dexterity", "dexterity"),
+                    ("Constitution", "constitution"),
+                    ("Intelligence", "intelligence"),
+                    ("Wisdom", "wisdom"),
+                    ("Charisma", "charisma"),
+                ]
+
+                yield SelectionList(*saving_throws, id="saves-list")
+
+                with Horizontal(id="button-bar"):
+                    yield Button("Next: Ability Scores →", id="btn-next", variant="primary")
+                    yield Button("← Back", id="btn-back", variant="default")
+
+        def on_button_pressed(self, event: Button.Pressed) -> None:
+            """Handle button presses."""
+            button_id = event.button.id
+
+            if button_id == "btn-back":
+                self.app.pop_screen()
+            elif button_id == "btn-next":
+                # Get selected skills
+                skills_list = self.query_one("#skills-list", SelectionList)
+                self.character_data["skill_proficiencies"] = list(skills_list.selected)
+
+                # Get selected saving throws
+                saves_list = self.query_one("#saves-list", SelectionList)
+                self.character_data["saving_throw_proficiencies"] = list(saves_list.selected)
+
                 # Move to ability scores screen
                 self.app.push_screen(CharacterAbilityScoresScreen(self.character_data))
 
@@ -270,7 +379,7 @@ if TEXTUAL_AVAILABLE:
         def compose(self) -> ComposeResult:
             """Create the ability scores form."""
             with Container(id="create-container"):
-                yield Static("✨ Create New Character - Step 2: Ability Scores", id="title")
+                yield Static("✨ Create New Character - Step 3: Ability Scores", id="title")
                 yield Static("Enter scores (1-30). Modifier is calculated automatically.", classes="form-label")
 
                 for ability in ["Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"]:
@@ -383,7 +492,7 @@ if TEXTUAL_AVAILABLE:
         def compose(self) -> ComposeResult:
             """Create the combat stats form."""
             with Container(id="create-container"):
-                yield Static("✨ Create New Character - Step 3: Combat Stats", id="title")
+                yield Static("✨ Create New Character - Step 4: Combat Stats", id="title")
 
                 with Horizontal(classes="form-row"):
                     yield Label("Armor Class:", classes="form-label")
@@ -429,11 +538,15 @@ if TEXTUAL_AVAILABLE:
         def create_character(self) -> None:
             """Create the character and generate PDF."""
             try:
-                from ..character import Character, AbilityScores
+                from ..character import Character, AbilityScores, Skill, Ability
                 from ..sheet_generator import generate_and_compile_character_sheet
 
                 # Create character object
                 self.app.notify(f"Creating character: {self.character_data['name']}...")
+
+                # Convert skill strings to Skill enums
+                skill_profs = [Skill(s) for s in self.character_data.get("skill_proficiencies", [])]
+                save_profs = [Ability(s) for s in self.character_data.get("saving_throw_proficiencies", [])]
 
                 character = Character(
                     name=self.character_data["name"],
@@ -444,6 +557,8 @@ if TEXTUAL_AVAILABLE:
                     background=self.character_data.get("background"),
                     alignment=self.character_data.get("alignment"),
                     ability_scores=AbilityScores(**self.character_data["ability_scores"]),
+                    skill_proficiencies=skill_profs,
+                    saving_throw_proficiencies=save_profs,
                     armor_class=self.character_data["armor_class"],
                     max_hit_points=self.character_data["max_hit_points"],
                     speed=self.character_data["speed"],

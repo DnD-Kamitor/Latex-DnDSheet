@@ -193,26 +193,32 @@ pip install textual>=0.47.0 rich>=13.0.0
 - ✓ Visual feedback with notifications
 - ✓ Fully integrated with existing backend
 
-### Phase 9: Character Creation TUI Screens ✅ COMPLETE
-- [x] Create character creation wizard (3-step multi-screen flow)
+### Phase 9: Character Creation TUI Screens ✅ COMPLETE (Enhanced!)
+- [x] Create character creation wizard (4-step multi-screen flow)
 - [x] Step 1: Basic info form (name, player, race, class, level, background, alignment)
-- [x] Step 2: Ability scores with live modifier calculation
-- [x] Step 3: Combat stats (AC, HP, speed, hit dice)
+- [x] Step 2: Skills & Proficiencies selection (NEW!)
+  - All 18 D&D skills with ability shown (e.g., "Athletics (STR)")
+  - Saving throw proficiencies (6 abilities)
+  - Multi-select with SelectionList widgets
+- [x] Step 3: Ability scores with live modifier calculation
+- [x] Step 4: Combat stats (AC, HP, speed, hit dice)
 - [x] Implement form validation (required fields, number ranges)
 - [x] Add class/race selection with dropdown Select widgets
 - [x] Wire up "Create & Generate PDF" to backend
-- [x] Save character to JSON automatically
-- [x] Generate PDF directly from wizard
+- [x] Save character to JSON automatically with skills/saves
+- [x] Generate PDF with all proficiencies displayed correctly
 - [x] Navigation: Next/Back buttons between steps
 - [x] Cancel button to return to main menu
 
 **Working Features**:
-- ✓ 3-step wizard for creating characters from scratch
+- ✓ 4-step wizard for creating COMPLETE characters
+- ✓ Select any combination of 18 skills for proficiency
+- ✓ Select saving throw proficiencies (typically 2 for your class)
 - ✓ Dropdowns for race (9 options), class (12 options), alignment (9 options)
 - ✓ Real-time ability modifier calculation as you type
 - ✓ Validation on all numeric inputs (level 1-20, abilities 1-30, etc.)
 - ✓ Automatically saves to output/{character_name}.json
-- ✓ Generates PDF immediately after creation
+- ✓ Generates PDF with skill bonuses correctly calculated
 - ✓ Full error handling with notifications
 
 ### Phase 10: File Management UI
