@@ -2,6 +2,22 @@
 
 A Linux TUI (Terminal User Interface) application for creating beautiful D&D-themed documents using LaTeX. Generate character sheets, spell books, ledgers, NPC stat blocks, and immersive in-world documents with the authentic look and feel of official D&D materials.
 
+## Quick Start
+
+**One command to install and run:**
+
+```bash
+./INSTALL.sh
+```
+
+**Already installed? Just run:**
+
+```bash
+./RUN.sh
+```
+
+See [QUICKSTART.md](QUICKSTART.md) for more details.
+
 ## Project Vision
 
 **More than just character sheets** - this tool empowers DMs and players to create any D&D-themed document:
