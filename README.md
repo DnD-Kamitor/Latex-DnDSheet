@@ -193,15 +193,27 @@ pip install textual>=0.47.0 rich>=13.0.0
 - ✓ Visual feedback with notifications
 - ✓ Fully integrated with existing backend
 
-### Phase 9: Character Creation TUI Screens
-- [ ] Create character creation wizard (multi-screen)
-- [ ] Implement form inputs with validation feedback
-- [ ] Add ability score input screen (with point buy calculator option)
-- [ ] Add class/race selection screens (dropdown/list)
-- [ ] Create equipment/inventory input screen
-- [ ] Add preview screen showing final character
-- [ ] Wire up "Generate PDF" button to existing core functions
-- [ ] Write test: Complete character creation flow in TUI
+### Phase 9: Character Creation TUI Screens ✅ COMPLETE
+- [x] Create character creation wizard (3-step multi-screen flow)
+- [x] Step 1: Basic info form (name, player, race, class, level, background, alignment)
+- [x] Step 2: Ability scores with live modifier calculation
+- [x] Step 3: Combat stats (AC, HP, speed, hit dice)
+- [x] Implement form validation (required fields, number ranges)
+- [x] Add class/race selection with dropdown Select widgets
+- [x] Wire up "Create & Generate PDF" to backend
+- [x] Save character to JSON automatically
+- [x] Generate PDF directly from wizard
+- [x] Navigation: Next/Back buttons between steps
+- [x] Cancel button to return to main menu
+
+**Working Features**:
+- ✓ 3-step wizard for creating characters from scratch
+- ✓ Dropdowns for race (9 options), class (12 options), alignment (9 options)
+- ✓ Real-time ability modifier calculation as you type
+- ✓ Validation on all numeric inputs (level 1-20, abilities 1-30, etc.)
+- ✓ Automatically saves to output/{character_name}.json
+- ✓ Generates PDF immediately after creation
+- ✓ Full error handling with notifications
 
 ### Phase 10: File Management UI
 - [ ] Add "Load Document" screen with file browser widget

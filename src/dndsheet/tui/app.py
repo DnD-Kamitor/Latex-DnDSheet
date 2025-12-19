@@ -36,6 +36,7 @@ def main() -> int:
 
     # Import functional screens
     from .screens import CharacterFileLoadScreen
+    from .character_creator import CharacterBasicInfoScreen
 
     class MainMenuScreen(Screen):
         """Main menu screen for document type selection."""
@@ -126,35 +127,6 @@ def main() -> int:
                 # Placeholder for other features
                 self.app.notify(f"Feature not yet implemented: {button_id}", severity="warning")
 
-    class CharacterCreateScreen(Screen):
-        """Screen for creating a new character."""
-
-        CSS = """
-        CharacterCreateScreen {
-            align: center middle;
-        }
-
-        #create-container {
-            width: 80;
-            height: auto;
-            border: solid $primary;
-            background: $surface;
-            padding: 2;
-        }
-        """
-
-        def compose(self) -> ComposeResult:
-            """Create widgets for the character creation screen."""
-            with Container(id="create-container"):
-                yield Static("✨ Create New Character", id="title")
-                yield Static("This feature will be implemented in Phase 8", classes="subtitle")
-                yield Button("← Back to Main Menu", id="btn-back", variant="primary")
-
-        def on_button_pressed(self, event: Button.Pressed) -> None:
-            """Handle button press."""
-            if event.button.id == "btn-back":
-                self.app.pop_screen()
-
     class SettingsScreen(Screen):
         """Settings screen."""
 
@@ -213,7 +185,7 @@ def main() -> int:
         SCREENS = {
             "main": MainMenuScreen,
             "character_load": CharacterFileLoadScreen,
-            "character_create": CharacterCreateScreen,
+            "character_create": CharacterBasicInfoScreen,
             "settings": SettingsScreen,
         }
 
