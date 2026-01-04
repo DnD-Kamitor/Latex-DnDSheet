@@ -6,64 +6,29 @@ This module defines the core character data structure using dataclasses.
 
 import json
 from dataclasses import dataclass, field, asdict
-from enum import Enum
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List, Set
+
+from .enums import Ability, Skill, SKILL_ABILITIES, MagicSchool, SpellComponent
+from .spells import Spellbook, Spell
 
 
-class Ability(str, Enum):
-    """D&D 5e ability scores."""
-    STRENGTH = "strength"
-    DEXTERITY = "dexterity"
-    CONSTITUTION = "constitution"
-    INTELLIGENCE = "intelligence"
-    WISDOM = "wisdom"
-    CHARISMA = "charisma"
+# Helper to load rulebook data
+def _load_rulebook_data(filename: str) -> dict:
+    # This is a simplification. In a real app, you might have a dedicated asset loader.
+    # It assumes the script is run from the project root or tests/.
+    path = Path(__file__).parent.parent.parent / "rulebooks" / "reference" / "calculations" / filename
+    if not path.exists():
+        # Fallback for different execution contexts
+        path = Path("rulebooks/reference/calculations") / filename
+    if not path.exists():
+        raise FileNotFoundError(f"Could not find rulebook file: {filename} at path {path.resolve()}")
+    with open(path, 'r') as f:
+        return json.load(f)
 
 
-class Skill(str, Enum):
-    """D&D 5e skills and their governing abilities."""
-    ACROBATICS = "acrobatics"  # DEX
-    ANIMAL_HANDLING = "animal_handling"  # WIS
-    ARCANA = "arcana"  # INT
-    ATHLETICS = "athletics"  # STR
-    DECEPTION = "deception"  # CHA
-    HISTORY = "history"  # INT
-    INSIGHT = "insight"  # WIS
-    INTIMIDATION = "intimidation"  # CHA
-    INVESTIGATION = "investigation"  # INT
-    MEDICINE = "medicine"  # WIS
-    NATURE = "nature"  # INT
-    PERCEPTION = "perception"  # WIS
-    PERFORMANCE = "performance"  # CHA
-    PERSUASION = "persuasion"  # CHA
-    RELIGION = "religion"  # INT
-    SLEIGHT_OF_HAND = "sleight_of_hand"  # DEX
-    STEALTH = "stealth"  # DEX
-    SURVIVAL = "survival"  # WIS
-
-
-# Skill to ability mapping
-SKILL_ABILITIES: dict[Skill, Ability] = {
-    Skill.ACROBATICS: Ability.DEXTERITY,
-    Skill.ANIMAL_HANDLING: Ability.WISDOM,
-    Skill.ARCANA: Ability.INTELLIGENCE,
-    Skill.ATHLETICS: Ability.STRENGTH,
-    Skill.DECEPTION: Ability.CHARISMA,
-    Skill.HISTORY: Ability.INTELLIGENCE,
-    Skill.INSIGHT: Ability.WISDOM,
-    Skill.INTIMIDATION: Ability.CHARISMA,
-    Skill.INVESTIGATION: Ability.INTELLIGENCE,
-    Skill.MEDICINE: Ability.WISDOM,
-    Skill.NATURE: Ability.INTELLIGENCE,
-    Skill.PERCEPTION: Ability.WISDOM,
-    Skill.PERFORMANCE: Ability.CHARISMA,
-    Skill.PERSUASION: Ability.CHARISMA,
-    Skill.RELIGION: Ability.INTELLIGENCE,
-    Skill.SLEIGHT_OF_HAND: Ability.DEXTERITY,
-    Skill.STEALTH: Ability.DEXTERITY,
-    Skill.SURVIVAL: Ability.WISDOM,
-}
+PROFICIENCY_BONUS_DATA = _load_rulebook_data("proficiency-bonus.json")["proficiency_by_level"]
+ABILITY_MODIFIER_DATA = _load_rulebook_data("ability-modifiers.json")["modifier_table"]
 
 
 @dataclass
@@ -78,51 +43,36 @@ class AbilityScores:
     charisma: int = 10
 
     def __post_init__(self):
-        """Validate ability scores are in valid range (1-30)."""
         for ability in ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma']:
             value = getattr(self, ability)
             if not (1 <= value <= 30):
                 raise ValueError(f"{ability} must be between 1 and 30, got {value}")
 
     def get_score(self, ability: Ability) -> int:
-        """Get ability score by ability type."""
         return getattr(self, ability.value)
 
     def get_modifier(self, ability: Ability) -> int:
-        """Calculate ability modifier using the formula: (score - 10) // 2."""
         score = self.get_score(ability)
-        return (score - 10) // 2
+        return ABILITY_MODIFIER_DATA.get(str(score), (score - 10) // 2)
 
     @property
-    def strength_modifier(self) -> int:
-        return self.get_modifier(Ability.STRENGTH)
-
+    def strength_modifier(self) -> int: return self.get_modifier(Ability.STRENGTH)
     @property
-    def dexterity_modifier(self) -> int:
-        return self.get_modifier(Ability.DEXTERITY)
-
+    def dexterity_modifier(self) -> int: return self.get_modifier(Ability.DEXTERITY)
     @property
-    def constitution_modifier(self) -> int:
-        return self.get_modifier(Ability.CONSTITUTION)
-
+    def constitution_modifier(self) -> int: return self.get_modifier(Ability.CONSTITUTION)
     @property
-    def intelligence_modifier(self) -> int:
-        return self.get_modifier(Ability.INTELLIGENCE)
-
+    def intelligence_modifier(self) -> int: return self.get_modifier(Ability.INTELLIGENCE)
     @property
-    def wisdom_modifier(self) -> int:
-        return self.get_modifier(Ability.WISDOM)
-
+    def wisdom_modifier(self) -> int: return self.get_modifier(Ability.WISDOM)
     @property
-    def charisma_modifier(self) -> int:
-        return self.get_modifier(Ability.CHARISMA)
+    def charisma_modifier(self) -> int: return self.get_modifier(Ability.CHARISMA)
 
 
 @dataclass
 class Character:
     """D&D 5e character sheet data model."""
 
-    # Basic information
     name: str
     race: str
     character_class: str
@@ -130,229 +80,202 @@ class Character:
     player_name: Optional[str] = None
     background: Optional[str] = None
     alignment: Optional[str] = None
-
-    # Ability scores
     ability_scores: AbilityScores = field(default_factory=AbilityScores)
-
-    # Proficiencies
-    skill_proficiencies: list[Skill] = field(default_factory=list)
-    saving_throw_proficiencies: list[Ability] = field(default_factory=list)
-
-    # Combat stats
+    skill_proficiencies: List[Skill] = field(default_factory=list)
+    saving_throw_proficiencies: List[Ability] = field(default_factory=list)
     armor_class: int = 10
-    initiative_bonus: Optional[int] = None  # If None, uses DEX modifier
+    initiative_bonus: Optional[int] = None
     speed: int = 30
     max_hit_points: int = 10
-    current_hit_points: Optional[int] = None  # If None, equals max_hit_points
+    current_hit_points: Optional[int] = None
     temporary_hit_points: int = 0
-    hit_dice: str = "1d8"  # e.g., "3d10"
-
-    # Additional stats
+    hit_dice: str = "1d8"
     inspiration: bool = False
     experience_points: int = 0
+    spellcasting_ability: Optional[Ability] = None
+    spellbook: Spellbook = field(default_factory=Spellbook)
 
     def __post_init__(self):
-        """Validate character data and set defaults."""
-        # Validate level
         if not (1 <= self.level <= 20):
             raise ValueError(f"Level must be between 1 and 20, got {self.level}")
-
-        # Validate name
         if not self.name or len(self.name) > 100:
             raise ValueError("Name must be 1-100 characters")
-
-        # Set current HP to max if not specified
         if self.current_hit_points is None:
             self.current_hit_points = self.max_hit_points
-
-        # Validate HP
         if self.max_hit_points < 1:
             raise ValueError("Max hit points must be at least 1")
         if self.current_hit_points < 0:
             raise ValueError("Current hit points cannot be negative")
-
-        # Validate AC
         if not (1 <= self.armor_class <= 30):
             raise ValueError("Armor class must be between 1 and 30")
+        
+        # Automatically update spell slots based on class and level
+        self.spellbook.update_spell_slots(self.level, self.character_class)
 
     @property
     def proficiency_bonus(self) -> int:
-        """Calculate proficiency bonus based on character level."""
-        # Standard D&D 5e proficiency progression
-        if self.level < 5:
-            return 2
-        elif self.level < 9:
-            return 3
-        elif self.level < 13:
-            return 4
-        elif self.level < 17:
-            return 5
-        else:
-            return 6
+        return PROFICIENCY_BONUS_DATA.get(str(self.level), 0)
 
     @property
     def initiative(self) -> int:
-        """Calculate initiative (DEX modifier + initiative bonus if any)."""
         initiative = self.ability_scores.dexterity_modifier
         if self.initiative_bonus is not None:
             initiative += self.initiative_bonus
         return initiative
 
-    def get_skill_modifier(self, skill: Skill) -> int:
-        """
-        Calculate skill modifier.
+    @property
+    def spell_save_dc(self) -> Optional[int]:
+        if not self.spellcasting_ability:
+            return None
+        mod = self.ability_scores.get_modifier(self.spellcasting_ability)
+        return 8 + self.proficiency_bonus + mod
 
-        Formula: ability_modifier + (proficiency_bonus if proficient else 0)
-        """
-        # Get governing ability for this skill
+    @property
+    def spell_attack_bonus(self) -> Optional[int]:
+        if not self.spellcasting_ability:
+            return None
+        mod = self.ability_scores.get_modifier(self.spellcasting_ability)
+        return self.proficiency_bonus + mod
+
+    def get_skill_modifier(self, skill: Skill) -> int:
         ability = SKILL_ABILITIES[skill]
         modifier = self.ability_scores.get_modifier(ability)
-
-        # Add proficiency bonus if proficient
         if skill in self.skill_proficiencies:
             modifier += self.proficiency_bonus
-
         return modifier
 
     def get_saving_throw(self, ability: Ability) -> int:
-        """
-        Calculate saving throw modifier.
-
-        Formula: ability_modifier + (proficiency_bonus if proficient else 0)
-        """
         modifier = self.ability_scores.get_modifier(ability)
-
-        # Add proficiency bonus if proficient
         if ability in self.saving_throw_proficiencies:
             modifier += self.proficiency_bonus
-
         return modifier
 
     @classmethod
     def from_json(cls, json_path: Path) -> "Character":
-        """Load character from JSON file."""
         with open(json_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
-
-        # Rename 'class' to 'character_class' for Python
         if 'class' in data:
             data['character_class'] = data.pop('class')
-
-        # Convert ability_scores dict to AbilityScores object
         if 'ability_scores' in data and isinstance(data['ability_scores'], dict):
             data['ability_scores'] = AbilityScores(**data['ability_scores'])
-
-        # Convert skill/ability proficiency strings to enums
         if 'skill_proficiencies' in data:
             data['skill_proficiencies'] = [Skill(s) for s in data['skill_proficiencies']]
         if 'saving_throw_proficiencies' in data:
             data['saving_throw_proficiencies'] = [Ability(a) for a in data['saving_throw_proficiencies']]
+        if 'spellcasting_ability' in data and data['spellcasting_ability']:
+            data['spellcasting_ability'] = Ability(data['spellcasting_ability'])
+        
+        # Deserialize spellbook
+        if 'spellbook' in data:
+            spellbook_data = data['spellbook']
+            spells_data = spellbook_data.get('spells', [])
+            spells = []
+            for s_data in spells_data:
+                # Convert component strings back to enums
+                s_data['components'] = {SpellComponent(c) for c in s_data.get('components', [])}
+                # Convert school string back to enum
+                s_data['school'] = MagicSchool(s_data['school'])
+                spells.append(Spell(**s_data))
 
+            data['spellbook'] = Spellbook(
+                spells=spells,
+                prepared_spells=spellbook_data.get('prepared_spells', [])
+            )
+        
         return cls(**data)
 
     def to_json(self, json_path: Path, indent: int = 2) -> None:
-        """Save character to JSON file."""
         json_path.parent.mkdir(parents=True, exist_ok=True)
-
-        # Convert to dict
         data = asdict(self)
-
-        # Rename character_class to class for JSON
+        
+        # Basic field conversions
         data['class'] = data.pop('character_class')
-
-        # Convert enum values to strings
-        if 'skill_proficiencies' in data:
-            data['skill_proficiencies'] = [s.value if isinstance(s, Skill) else s for s in data['skill_proficiencies']]
-        if 'saving_throw_proficiencies' in data:
-            data['saving_throw_proficiencies'] = [a.value if isinstance(a, Ability) else a for a in data['saving_throw_proficiencies']]
-
+        if data.get('skill_proficiencies'):
+            data['skill_proficiencies'] = [s.value for s in data['skill_proficiencies']]
+        if data.get('saving_throw_proficiencies'):
+            data['saving_throw_proficiencies'] = [a.value for a in data['saving_throw_proficiencies']]
+        if data.get('spellcasting_ability'):
+            data['spellcasting_ability'] = data['spellcasting_ability'].value
+        
+        # Custom serialization for spellbook
+        spellbook_dict = asdict(self.spellbook)
+        serialized_spells = []
+        for spell in self.spellbook.spells:
+            spell_data = asdict(spell)
+            # Convert enums to their string values for JSON
+            spell_data['school'] = spell.school.value
+            spell_data['components'] = [c.value for c in spell.components]
+            serialized_spells.append(spell_data)
+        
+        spellbook_dict['spells'] = serialized_spells
+        data['spellbook'] = spellbook_dict
+        
         with open(json_path, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=indent)
 
 
-# Example usage and testing
 if __name__ == "__main__":
-    # Create a test character
-    grimnar = Character(
-        name="Grimnar Ironforge",
+    # Create a test character with spellcasting
+    elara_spells = [
+        Spell("Fire Bolt", 0, MagicSchool.EVOCATION, "1 Action", "120 feet", "Instantaneous", "You hurl a mote of fire...", components={SpellComponent.VERBAL, SpellComponent.SOMATIC}),
+        Spell("Mage Armor", 1, MagicSchool.ABJURATION, "1 Action", "Touch", "8 hours", "You touch a willing creature...", components={SpellComponent.VERBAL, SpellComponent.SOMATIC, SpellComponent.MATERIAL}, material_component="a piece of cured leather"),
+        Spell("Magic Missile", 1, MagicSchool.EVOCATION, "1 Action", "120 feet", "Instantaneous", "You create three glowing darts...", components={SpellComponent.VERBAL, SpellComponent.SOMATIC}),
+        Spell("Misty Step", 2, MagicSchool.CONJURATION, "1 Bonus Action", "Self", "Instantaneous", "Briefly surrounded by silvery mist...", components={SpellComponent.VERBAL})
+    ]
+
+    elara = Character(
+        name="Elara Moonwhisper",
         player_name="Test Player",
-        race="Mountain Dwarf",
-        character_class="Fighter",
-        level=5,
-        background="Soldier",
-        alignment="Lawful Good",
+        race="High Elf",
+        character_class="Wizard",
+        level=3,
+        background="Sage",
+        alignment="Neutral Good",
         ability_scores=AbilityScores(
-            strength=16,  # +3 modifier
-            dexterity=14,  # +2 modifier
-            constitution=15,  # +2 modifier
-            intelligence=10,  # +0 modifier
-            wisdom=12,  # +1 modifier
-            charisma=8,  # -1 modifier
+            strength=8, dexterity=14, constitution=12,
+            intelligence=17, wisdom=13, charisma=10
         ),
-        skill_proficiencies=[
-            Skill.ATHLETICS,
-            Skill.INTIMIDATION,
-            Skill.PERCEPTION,
-            Skill.SURVIVAL,
-        ],
-        saving_throw_proficiencies=[
-            Ability.STRENGTH,
-            Ability.CONSTITUTION,
-        ],
-        armor_class=18,
-        max_hit_points=42,
-        speed=25,
-        hit_dice="5d10",
-        experience_points=6500,
+        skill_proficiencies=[Skill.ARCANA, Skill.HISTORY],
+        saving_throw_proficiencies=[Ability.INTELLIGENCE, Ability.WISDOM],
+        armor_class=12,
+        max_hit_points=18,
+        speed=30,
+        hit_dice="3d6",
+        spellcasting_ability=Ability.INTELLIGENCE,
+        spellbook=Spellbook(spells=elara_spells)
     )
+    elara.spellbook.prepare_spell("Mage Armor")
+    elara.spellbook.prepare_spell("Magic Missile")
 
     print("Character Created:")
-    print(f"  Name: {grimnar.name}")
-    print(f"  Class: {grimnar.character_class} {grimnar.level}")
-    print(f"  Proficiency Bonus: +{grimnar.proficiency_bonus}")
-    print()
-    print("Ability Scores:")
-    print(f"  STR: {grimnar.ability_scores.strength} ({grimnar.ability_scores.strength_modifier:+d})")
-    print(f"  DEX: {grimnar.ability_scores.dexterity} ({grimnar.ability_scores.dexterity_modifier:+d})")
-    print(f"  CON: {grimnar.ability_scores.constitution} ({grimnar.ability_scores.constitution_modifier:+d})")
-    print(f"  INT: {grimnar.ability_scores.intelligence} ({grimnar.ability_scores.intelligence_modifier:+d})")
-    print(f"  WIS: {grimnar.ability_scores.wisdom} ({grimnar.ability_scores.wisdom_modifier:+d})")
-    print(f"  CHA: {grimnar.ability_scores.charisma} ({grimnar.ability_scores.charisma_modifier:+d})")
-    print()
-    print("Skills:")
-    print(f"  Athletics: {grimnar.get_skill_modifier(Skill.ATHLETICS):+d} (proficient)")
-    print(f"  Perception: {grimnar.get_skill_modifier(Skill.PERCEPTION):+d} (proficient)")
-    print(f"  Stealth: {grimnar.get_skill_modifier(Skill.STEALTH):+d}")
-    print()
-    print("Saving Throws:")
-    print(f"  STR: {grimnar.get_saving_throw(Ability.STRENGTH):+d} (proficient)")
-    print(f"  DEX: {grimnar.get_saving_throw(Ability.DEXTERITY):+d}")
-    print(f"  CON: {grimnar.get_saving_throw(Ability.CONSTITUTION):+d} (proficient)")
-    print()
-    print("Combat:")
-    print(f"  AC: {grimnar.armor_class}")
-    print(f"  Initiative: {grimnar.initiative:+d}")
-    print(f"  HP: {grimnar.current_hit_points}/{grimnar.max_hit_points}")
-    print(f"  Hit Dice: {grimnar.hit_dice}")
-    print()
+    print(f"  Name: {elara.name}")
+    print(f"  Class: {elara.character_class} {elara.level}")
+    print(f"  Proficiency Bonus: +{elara.proficiency_bonus}")
+    print(f"  Spellcasting Ability: {elara.spellcasting_ability.value}")
+    print(f"  Spell Save DC: {elara.spell_save_dc}")
+    print(f"  Spell Attack Bonus: +{elara.spell_attack_bonus}")
+    print("\nSpell Slots:")
+    for level, slots in sorted(elara.spellbook.spell_slots.items()):
+        print(f"  Level {level}: {slots.remaining}/{slots.max}")
+    
+    print("\nPrepared Spells:")
+    for level, spells in sorted(elara.spellbook.get_prepared_spells_by_level().items()):
+        print(f"  Level {level}: {', '.join(s.name for s in spells)}")
 
     # Test JSON export/import
-    print("Testing JSON serialization...")
-    test_path = Path("test_character.json")
-    grimnar.to_json(test_path)
+    print("\nTesting JSON serialization...")
+    test_path = Path("test_character_spells.json")
+    elara.to_json(test_path)
     print(f"  ✓ Saved to {test_path}")
 
     loaded = Character.from_json(test_path)
     print(f"  ✓ Loaded: {loaded.name} (Level {loaded.level} {loaded.character_class})")
+    assert loaded.spell_save_dc == elara.spell_save_dc
+    assert loaded.spellbook.get_spell("Fire Bolt") is not None
+    assert loaded.spellbook.is_prepared("Mage Armor")
+    assert loaded.spellbook.spell_slots[1].max == 4
+    print("  ✓ All spell data verified")
 
-    # Verify calculations match
-    assert loaded.proficiency_bonus == grimnar.proficiency_bonus, "Proficiency bonus mismatch"
-    assert loaded.get_skill_modifier(Skill.ATHLETICS) == grimnar.get_skill_modifier(Skill.ATHLETICS), "Skill modifier mismatch"
-    assert loaded.ability_scores.strength_modifier == grimnar.ability_scores.strength_modifier, "Ability modifier mismatch"
-    print("  ✓ All calculations verified")
-
-    # Cleanup
     test_path.unlink()
     print("  ✓ Cleanup complete")
-    print()
-    print("✓ Character data model is working correctly!")
+    print("\n✓ Character data model with spells is working correctly!")

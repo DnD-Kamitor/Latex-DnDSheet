@@ -1,0 +1,168 @@
+---
+title: "{{ character.name }}"
+subtitle: "{{ character.character_class }} Level {{ character.level }}"
+author: "{{ character.player_name or 'Player' }}"
+date: "{{ now().strftime('%Y-%m-%d') }}"
+format:
+  pdf:
+    documentclass: dndbook # This assumes Quarto can find or is configured with the dndbook class
+    mainfont: Gillius ADF No2
+    monofont: Fira Code
+    link-citations: true
+    lof: true
+    lot: true
+    geometry: "letterpaper,twocolumn,margin=1in"
+    header-includes:
+      - \usepackage[utf8]{inputenc}
+      - \usepackage{multicol}
+      - \usepackage{dnd}
+      - \usepackage{dndbook}
+      - \usepackage{longtable}
+      - \usepackage[shortlabels]{enumitem}
+      - \usepackage[T1]{fontenc}
+      - \usepackage{luatexja}
+      - \usepackage{gilliusadf} # If using specific fonts
+      - \usepackage{kpfonts}
+      - \usepackage{microtype}
+      - \usepackage{etoolbox}
+      - \usepackage{graphicx}
+      - \usepackage{xcolor}
+      - \usepackage{colortbl}
+      - \usepackage{hologo}
+      - \usepackage{hyperref}
+      - \hypersetup{colorlinks=true,linkcolor=red,urlcolor=blue}
+      # This part for dndbook custom commands might be tricky, Quarto might not process it easily
+      # If dndbook.cls is not found by quarto, it might need to be explicitly placed or configured.
+      # For now, assume a basic LaTeX setup.
+execute:
+  echo: false
+---
+
+# {{ character.name }}
+
+## Character Details
+
+| **Field**          | **Value**                                    |
+|:-------------------|:---------------------------------------------|
+| **Class**          | {{ character.character_class }}              |
+| **Level**          | {{ character.level }}                        |
+| **Race**           | {{ character.race }}                         |
+{% if character.background %}
+| **Background**     | {{ character.background }}                   |
+{% endif %}{% if character.alignment %}
+| **Alignment**      | {{ character.alignment }}                    |
+{% endif %}{% if character.experience_points > 0 %}
+| **Experience**     | {{ "{:,}".format(character.experience_points) }} XP |
+{% endif %}
+
+## Ability Scores
+
+| **Ability**   | **Score** | **Modifier** | **Save**                                        | **Prof?** |
+|:--------------|:----------|:-------------|:------------------------------------------------|:----------|
+| Strength      | {{ character.ability_scores.strength }}     | {{ "%+d"|format(character.ability_scores.strength_modifier) }}     | {{ "%+d"|format(character.get_saving_throw(Ability.STRENGTH)) }}     | {% if Ability.STRENGTH in character.saving_throw_proficiencies %}Yes{% else %}No{% endif %} |
+| Dexterity     | {{ character.ability_scores.dexterity }}    | {{ "%+d"|format(character.ability_scores.dexterity_modifier) }}    | {{ "%+d"|format(character.get_saving_throw(Ability.DEXTERITY)) }}    | {% if Ability.DEXTERITY in character.saving_throw_proficiencies %}Yes{% else %}No{% endif %} |
+| Constitution  | {{ character.ability_scores.constitution }} | {{ "%+d"|format(character.ability_scores.constitution_modifier) }} | {{ "%+d"|format(character.get_saving_throw(Ability.CONSTITUTION)) }} | {% if Ability.CONSTITUTION in character.saving_throw_proficiencies %}Yes{% else %}No{% endif %} |
+| Intelligence  | {{ character.ability_scores.intelligence }} | {{ "%+d"|format(character.ability_scores.intelligence_modifier) }} | {{ "%+d"|format(character.get_saving_throw(Ability.INTELLIGENCE)) }} | {% if Ability.INTELLIGENCE in character.saving_throw_proficiencies %}Yes{% else %}No{% endif %} |
+| Wisdom        | {{ character.ability_scores.wisdom }}       | {{ "%+d"|format(character.ability_scores.wisdom_modifier) }}       | {{ "%+d"|format(character.get_saving_throw(Ability.WISDOM)) }}       | {% if Ability.WISDOM in character.saving_throw_proficiencies %}Yes{% else %}No{% endif %} |
+| Charisma      | {{ character.ability_scores.charisma }}     | {{ "%+d"|format(character.ability_scores.charisma_modifier) }}     | {{ "%+d"|format(character.get_saving_throw(Ability.CHARISMA)) }}     | {% if Ability.CHARISMA in character.saving_throw_proficiencies %}Yes{% else %}No{% endif %} |
+
+*Proficiency Bonus:* At level {{ character.level }}, the proficiency bonus is **{{ "%+d"|format(character.proficiency_bonus) }}**.
+
+## Combat Stats
+
+| **Field**          | **Value**                       |
+|:-------------------|:--------------------------------|
+| **Armor Class**    | {{ character.armor_class }}     |
+| **Initiative**     | {{ "%+d"|format(character.initiative) }} |
+| **Speed**          | {{ character.speed }} ft.       |
+| **Hit Points**     | {{ character.current_hit_points }}/{{ character.max_hit_points }}{% if character.temporary_hit_points > 0 %} (+{{ character.temporary_hit_points }} temp){% endif %} |
+| **Hit Dice**       | {{ character.hit_dice }}        |
+{% if character.inspiration %}
+| **Inspiration**    | Yes                             |
+{% endif %}
+
+## Skills
+
+| **Skill**                 | **Bonus**                               | **Prof?** |
+|:--------------------------|:----------------------------------------|:----------|
+{% for skill in ALL_SKILLS %}
+| {{ skill.value.replace("_", " ").title() }} | {{ "%+d"|format(character.get_skill_modifier(skill)) }} | {% if skill in character.skill_proficiencies %}*{% endif %} |
+{% endfor %}
+
+{% if character.spellcasting_ability %}
+# Spellcasting
+
+| **Field**             | **Value**                                    |
+|:----------------------|:---------------------------------------------|
+| **Class**             | {{ character.character_class }}              |
+| **Ability**           | {{ character.spellcasting_ability.value.title() }} |
+| **Save DC**           | {{ character.spell_save_dc }}                |
+| **Attack Bonus**      | {{ "%+d"|format(character.spell_attack_bonus) }} |
+
+## Prepared Spells
+
+{% set prepared_spells = character.spellbook.get_prepared_spells_by_level() %}
+
+{% if prepared_spells[0] %}
+### Cantrips
+{% for spell in prepared_spells[0] | sort(attribute='name') %}
+*   {{ spell.name }}
+{% endfor %}
+{% endif %}
+
+{% for level in range(1, 10) %}
+{% if prepared_spells[level] %}
+### Level {{ level }} Spells
+{% for spell in prepared_spells[level] | sort(attribute='name') %}
+*   {{ spell.name }}{% if spell.ritual %} (Ritual){% endif %}{% if spell.concentration %} (C){% endif %}
+{% endfor %}
+{% endif %}
+{% endfor %}
+
+# Spellbook
+
+{% for spell in character.spellbook.get_prepared_spells() %}
+## {{ spell.name }}
+*   **Level**: {% if spell.level == 0 %}{{ spell.school.value }} Cantrip{% else %}{{ spell.level }}{{ 'st' if spell.level == 1 else ('nd' if spell.level == 2 else ('rd' if spell.level == 3 else 'th')) }}-level {{ spell.school.value }}{% endif %}
+*   **Casting Time**: {{ spell.casting_time }}
+*   **Range**: {{ spell.range }}
+*   **Components**: {{ spell.components_str }}
+*   **Duration**: {{ spell.duration }}{% if spell.concentration %}, concentration{% endif %}
+
+{{ spell.description }}
+
+{% if spell.higher_levels %}
+*   **At Higher Levels**: {{ spell.higher_levels }}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+---
+
+## Equipment & Treasure
+
+| Item | Qty | Weight |
+|:---|:---:|:---:|
+|    |     |      |
+|    |     |      |
+|    |     |      |
+|    |     |      |
+|    |     |      |
+
+---
+
+## Transaction Ledger
+
+| Date | Item/Service | Debit | Credit |
+|:---|:-------------|:----:|:------:|
+|    |              |      |        |
+|    |              |      |        |
+|    |              |      |        |
+|    |              |      |        |
+|    |              |      |        |
+
+---
+
+## Character Notes
+
+*Use this space for character background, personality traits, allies, enemies, and other roleplaying notes.*

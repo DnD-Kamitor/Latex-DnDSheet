@@ -2,6 +2,7 @@
 
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage{multicol}
 
 \title{ {{ character.name }} }
 \author{ {{ character.player_name or "Player" }} }
@@ -37,8 +38,6 @@
 
 \begin{DndComment}{Proficiency Bonus}
     At level {{ character.level }}, the proficiency bonus is \textbf{ {{ "%+d"|format(character.proficiency_bonus) }} }.
-
-    This applies to: Attack rolls with proficient weapons{% if character.saving_throw_proficiencies %}, Saving throws ({% for ability in character.saving_throw_proficiencies %}{{ ability.value.upper()[:3] }}{% if not loop.last %}, {% endif %}{% endfor %}){% endif %}{% if character.skill_proficiencies %}, and proficient skills{% endif %}.
 \end{DndComment}
 
 \section*{Combat Stats}
@@ -52,40 +51,78 @@
 {% if character.inspiration %}    \textbf{Inspiration} & Yes \\
 {% endif %}\end{DndTable}
 
-{% if character.skill_proficiencies %}\section*{Skills}
+\section*{Skills}
 
-\begin{DndTable}[header=Proficient Skills]{lcc}
-    \textbf{Skill} & \textbf{Ability} & \textbf{Bonus} \\
-{% for skill in character.skill_proficiencies %}    {{ skill.value.replace("_", " ").title() }} & {{ SKILL_ABILITIES[skill].value.upper()[:3] }} & {{ "%+d"|format(character.get_skill_modifier(skill)) }} \\
+\begin{multicols}{2}
+\begin{DndTable}[header=All Skills]{lcc}
+    \textbf{Skill} & \textbf{Bonus} & \textbf{Prof?} \\
+{% for skill in ALL_SKILLS %}    {{ skill.value.replace("_", " ").title() }} & {{ "%+d"|format(character.get_skill_modifier(skill)) }} & {% if skill in character.skill_proficiencies %}*{% endif %} \\
 {% endfor %}\end{DndTable}
+\end{multicols}
 
-{% endif %}\section*{All Skills}
+{% if character.spellcasting_ability %}
+\newpage
+\section*{Spellcasting}
 
-\begin{DndTable}[header=All Skills (including non-proficient)]{lcc}
-    \textbf{Skill} & \textbf{Ability} & \textbf{Bonus} \\
-{% for skill in ALL_SKILLS %}    {{ skill.value.replace("_", " ").title() }}{% if skill in character.skill_proficiencies %}*{% endif %} & {{ SKILL_ABILITIES[skill].value.upper()[:3] }} & {{ "%+d"|format(character.get_skill_modifier(skill)) }} \\
-{% endfor %}\end{DndTable}
+\begin{DndTable}[header=Spellcasting]{lX}
+    \textbf{Spellcasting Class} & {{ character.character_class }} \\
+    \textbf{Spellcasting Ability} & {{ character.spellcasting_ability.value.title() }} \\
+    \textbf{Spell Save DC} & {{ character.spell_save_dc }} \\
+    \textbf{Spell Attack Bonus} & {{ "%+d"|format(character.spell_attack_bonus) }} \\
+\end{DndTable}
 
-\begin{DndComment}{Skill Proficiencies}
-    Skills marked with * are proficient and include the proficiency bonus of {{ "%+d"|format(character.proficiency_bonus) }}.
-\end{DndComment}
+{% set prepared_spells = character.spellbook.get_prepared_spells_by_level() %}
 
-\section*{Character Summary}
-
-\begin{DndSidebar}{Quick Reference}
-    \textbf{Name:} {{ character.name }}
-
-    \textbf{Level {{ character.level }} {{ character.race }} {{ character.character_class }}}
-{% if character.background %}
-    \textbf{Background:} {{ character.background }}
-{% endif %}{% if character.alignment %}
-    \textbf{Alignment:} {{ character.alignment }}
+{% if prepared_spells[0] %}
+\subsection*{Cantrips}
+\begin{itemize}
+{% for spell in prepared_spells[0] | sort(attribute='name') %}
+    \item {{ spell.name }}
+{% endfor %}
+\end{itemize}
 {% endif %}
-    \textbf{AC:} {{ character.armor_class }} \quad \textbf{Initiative:} {{ "%+d"|format(character.initiative) }}
 
-    \textbf{HP:} {{ character.current_hit_points }}/{{ character.max_hit_points }} \quad \textbf{Speed:} {{ character.speed }} ft.
+{% for level in range(1, 10) %}
+{% if prepared_spells[level] %}
+\subsection*{Level {{ level }} Spells}
+\begin{itemize}
+{% for spell in prepared_spells[level] | sort(attribute='name') %}
+    \item {{ spell.name }}{% if spell.ritual %} (Ritual){% endif %}{% if spell.concentration %} (C){% endif %}
+{% endfor %}
+\end{itemize}
+{% endif %}
+{% endfor %}
+{% endif %}
 
-    \textbf{Proficiency:} {{ "%+d"|format(character.proficiency_bonus) }}
-\end{DndSidebar}
+{% if character.spellbook.get_prepared_spells() %}
+\newpage
+\chapter*{Spellbook}
+\addcontentsline{toc}{chapter}{Spellbook}
+
+{% for spell in character.spellbook.get_prepared_spells() %}
+\begin{DndSpell}
+    \spelllevel{
+        {% if spell.level == 0 %}
+            {{ spell.school.value }} Cantrip
+        {% else %}
+            {{ spell.level }}{{ 'st' if spell.level == 1 else ('nd' if spell.level == 2 else ('rd' if spell.level == 3 else 'th')) }}-level {{ spell.school.value }}
+        {% endif %}
+        {% if spell.ritual %}(ritual){% endif %}
+    }
+    \spellcastingtime{ {{ spell.casting_time }} }
+    \spellrange{ {{ spell.range }} }
+    \spellcomponents{ {{ spell.components_str }} }
+    \spellduration{ {{ spell.duration }}{% if spell.concentration %}, concentration{% endif %} }
+    
+    \spelltitle{ {{ spell.name }} }
+    
+    {{ spell.description }}
+    
+    {% if spell.higher_levels %}
+    \spellhigherlevel{ {{ spell.higher_levels }} }
+    {% endif %}
+\end{DndSpell}
+{% endfor %}
+{% endif %}
 
 \end{document}

@@ -1,0 +1,83 @@
+% A basic wanted poster template
+\documentclass[12pt, letterpaper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\usepackage{wallpaper}
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts} % For \mathbb
+
+% Use a rustic, "Old West" style font if available
+% For example, "Allegro" or "Mesquite" - this requires font installation
+% As a fallback, we use a standard rustic-looking font
+\renewcommand{\familydefault}{\ttdefault}
+
+\pagestyle{empty}
+
+\begin{document}
+\ThisCenterWallPaper{1.0}{DND-5e-LaTeX-Template/img/paper-low-res.jpg}
+
+\begin{tcolorbox}[
+    colback=black!5!white,
+    colframe=black!75!black,
+    boxrule=2pt,
+    arc=5mm,
+    width=\textwidth,
+    halign=center
+]
+    \centering
+    {\Huge \bfseries \textsc{Wanted}}
+    
+    \vspace{1em} 
+    
+    {\Large \bfseries \textsc{Dead or Alive}}
+    
+    \vspace{1.5em} 
+    
+    % Image placeholder
+    \begin{tcolorbox}[
+        width=0.7\textwidth,
+        height=0.4\textheight,
+        colback=black!20,
+        colframe=black,
+        boxrule=1pt,
+        halign=center,
+        valign=center,
+        ]
+        {% if image_path %}
+        \includegraphics[width=\linewidth, height=\linewidth, keepaspectratio]{ {{ image_path }} }
+        {% else %}
+        \Large \bfseries Sketch / Portrait
+        {% endif %}
+    \end{tcolorbox}
+    
+    \vspace{1.5em} 
+    
+    {\Huge \bfseries \textsc{ {{ name }} }}
+    
+    \vspace{1.5em} 
+    
+    \begin{minipage}{0.8\textwidth}
+    \centering
+    {\large For crimes including, but not limited to:} \\
+    \vspace{0.5em} 
+    {\Large \bfseries \textit{ {{ crimes }} }}
+    \end{minipage}
+    
+    \vspace{2em} 
+    
+    {\huge \bfseries \textsc{Reward}} \\
+    \vspace{0.5em} 
+    {\Huge \bfseries \textsc{ {{ reward_amount }} Gold Pieces }}
+    
+    \vspace{1em} 
+    
+    \rule{\textwidth}{1pt}
+    
+    \vspace{0.5em} 
+    
+    \textit{Last seen near {{ last_seen_location }}. Approach with extreme caution. Report any information to the local authorities or the nearest bounty hunter's guild.}
+    
+\end{tcolorbox}
+
+\end{document}

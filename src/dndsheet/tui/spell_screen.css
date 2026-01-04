@@ -1,0 +1,64 @@
+#spell-screen-container {
+    layout: vertical;
+    overflow: auto;
+    padding: 1;
+}
+
+#spell-header-box {
+    height: auto;
+    border: round white;
+    padding: 1;
+    margin-bottom: 1;
+}
+
+#spell-slots-box {
+    height: auto;
+    border: round white;
+    padding: 1;
+    margin-bottom: 1;
+}
+
+#spell-list-box {
+    height: auto;
+    border: round white;
+    padding: 1;
+}
+
+#spell-table {
+    height: 100%;
+}
+
+.spell-stat {
+    width: 1fr;
+}
+
+#spell-slots-grid {
+    grid-size: 3;
+    grid-gutter: 1;
+    align: center middle;
+}
+
+.slot-level {
+    text-align: center;
+    color: $text-muted;
+}
+
+.slot-count {
+    text-align: center;
+    font-weight: bold;
+    font-size: 120%;
+}
+
+.slot-buttons {
+    width: 100%;
+    align: center middle;
+}
+
+.footer {
+    dock: bottom;
+    height: 1;
+    background: $primary-darken-2;
+    color: $text;
+    width: 100%;
+    align: center middle;
+}

@@ -53,13 +53,13 @@ def test_cli_check_command():
     assert result.returncode in [0, 1]
 
 
-def test_cli_generate_command_placeholder():
-    """Test that the generate command exists (placeholder)."""
+def test_cli_generate_command_file_not_found():
+    """Test that the generate command handles file not found."""
     result = subprocess.run(
         [sys.executable, "-m", "dndsheet", "generate", "nonexistent.json"],
         capture_output=True,
         text=True,
     )
-    # Should run without crashing (returns 1 as not implemented)
+    # Should return 1 because the file does not exist
     assert result.returncode == 1
-    assert "not yet implemented" in result.stdout.lower()
+    assert "file not found" in result.stdout.lower()

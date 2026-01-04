@@ -1,0 +1,78 @@
+---
+title: "{{ title }}"
+subtitle: "A Generic Book"
+author: "{{ author }}"
+date: "{{ now().strftime('%Y-%m-%d') }}"
+format:
+  pdf:
+    documentclass: dndbook # Assumes dndbook is available in Quarto
+    geometry: "letterpaper,oneside,margin=1in"
+    header-includes:
+      - \usepackage[utf8]{inputenc}
+      - \usepackage{dnd}
+      - \usepackage{dndbook}
+      # Add other necessary packages for dndbook if not already included by default
+execute:
+  echo: false
+---
+
+# Introduction
+
+Welcome to your new generic D&D book template! This document is designed to give you a head start in creating your own custom campaigns, lore books, or adventure modules using Quarto. Below are some examples of common elements you might want to include.
+
+# Chapter 1: The Basics
+
+## Setting the Scene
+This is a standard section. You can use it to describe locations, introduce characters, or set the mood for your players.
+
+### Key Locations
+Here's a subsection. Subsections are great for breaking down information into more manageable chunks.
+*   The Whispering Woods: Known for ancient spirits and rare herbs.
+*   The Sunken City of Eldoria: A lost civilization beneath the waves.
+*   The Obsidian Tower: A dark mage's lair, shrouded in mystery.
+
+### Important NPCs
+1.  Elara Meadowlight: A wise elven ranger.
+2.  Grommash Stonehand: A gruff dwarven blacksmith.
+3.  Seraphina Brightspark: A curious gnomish inventor.
+
+# Chapter 2: Adventure Hooks & Encounters
+
+## Sample Adventure Hook
+A local lord's prized artifact has been stolen! The tracks lead into the Whispering Woods. The reward is substantial, but so are the dangers.
+
+> **DM's Notes**
+> Remember to foreshadow the villain's motives and abilities early on. Perhaps a strange symbol is left at the crime scene, hinting at a cult.
+
+## Encounter Table
+
+| d6 | Encounter                                    |
+|:---|:---------------------------------------------|
+| 1  | 2d4 Goblins ambushing from the trees.        |
+| 2  | A lost merchant caravan, in need of aid.     |
+| 3  | A bewildered Dryad, distraught over a felled tree. |
+| 4  | A pack of 1d6 Wolves, on the hunt.           |
+| 5  | Evidence of a passing Owlbear, but no creature. |
+| 6  | A hidden shrine to a forgotten deity.        |
+
+## Combat Tactics
+When designing combat, consider the environment, monster abilities, and player strengths. Use cover, elevation, and terrain to make battles more dynamic.
+
+### Magic Items
+*   **Potion of Healing:** Restores 2d4+2 hit points.
+*   **Sentinel Shield:** While holding this shield, you have advantage on initiative rolls and Wisdom (Perception) checks.
+*   **Flame Tongue (Longsword):** As a bonus action, you can speak the command word to cause flames to erupt from the blade.
+
+### Visuals
+![Placeholder Image](DND-5e-LaTeX-Template/img/scrot.jpg){width=80% fig-align="center"}
+*A placeholder image demonstrating image inclusion. Replace with your own maps or artwork.*
+
+# Further Chapters
+
+Use additional chapters and sections to expand on your world, adventures, and characters.
+
+{% for i in range(3, num_chapters + 1) %}
+# Chapter {{ i }}
+
+(This is the start of Chapter {{ i }}.)
+{% endfor %}

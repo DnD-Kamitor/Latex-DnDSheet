@@ -1,0 +1,72 @@
+---
+title: "Wanted: {{ name }}"
+author: "Bounty Hunter's Guild"
+date: "{{ now().strftime('%Y-%m-%d') }}"
+format:
+  pdf:
+    documentclass: article
+    geometry: "letterpaper,margin=1in"
+    header-includes:
+      - \usepackage[utf8]{inputenc}
+      - \usepackage{graphicx}
+      - \usepackage{tcolorbox}
+      - \usepackage{wallpaper}
+      - \usepackage[T1]{fontenc}
+      - \usepackage{amsfonts}
+      # This is for the custom DND styling, might not render perfectly in Quarto's default PDF output
+      # If specific fonts are needed, they would need to be configured in Quarto's _quarto.yml
+execute:
+  echo: false
+---
+
+\thispagestyle{empty}
+\ThisCenterWallPaper{1.0}{DND-5e-LaTeX-Template/img/paper-low-res.jpg}
+
+\begin{tcolorbox}[colback=black!5!white, colframe=black!75!black, boxrule=2pt, arc=5mm, width=\textwidth, halign=center]
+    \centering
+    {\Huge \bfseries \textsc{Wanted}}
+    
+    \vspace{1em}
+    
+    {\Large \bfseries \textsc{Dead or Alive}}
+    
+    \vspace{1.5em}
+    
+    {% if image_path %}
+    \begin{center}
+    \includegraphics[width=0.7\textwidth, height=0.4\textheight, keepaspectratio]{ {{ image_path }} }
+    \end{center}
+    {% else %}
+    \begin{tcolorbox}[width=0.7\textwidth, height=0.4\textheight, colback=black!20, colframe=black, boxrule=1pt, halign=center, valign=center]
+        \Large \bfseries Sketch / Portrait
+    \end{tcolorbox}
+    {% endif %}
+    
+    \vspace{1.5em}
+    
+    {\Huge \bfseries \textsc{ {{ name }} }}
+    
+    \vspace{1.5em}
+    
+    \begin{minipage}{0.8\textwidth}
+    \centering
+    {\large For crimes including, but not limited to:} \\
+    \vspace{0.5em}
+    {\Large \bfseries \textit{ {{ crimes }} }}
+    \end{minipage}
+    
+    \vspace{2em}
+    
+    {\huge \bfseries \textsc{Reward}} \\
+    \vspace{0.5em}
+    {\Huge \bfseries \textsc{ {{ reward_amount }} Gold Pieces }}
+    
+    \vspace{1em}
+    
+    \rule{\textwidth}{1pt}
+    
+    \vspace{0.5em}
+    
+    \textit{Last seen near {{ last_seen_location }}. Approach with extreme caution. Report any information to the local authorities or the nearest bounty hunter's guild.}
+    
+\end{tcolorbox}

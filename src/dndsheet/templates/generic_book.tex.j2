@@ -1,0 +1,98 @@
+\documentclass[letterpaper,oneside,openany]{dndbook}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx} % Required for images
+\usepackage{longtable} % Required for long tables
+\usepackage{enumitem}  % For customized lists
+
+\title{ {{ title }} }
+\author{ {{ author }} }
+\date{ \today }
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\chapter*{Introduction}
+\addcontentsline{toc}{chapter}{Introduction}
+\thispagestyle{empty}
+Welcome to your new generic D\&D book template! This document is designed to give you a head start in creating your own custom campaigns, lore books, or adventure modules using the DND-5e-LaTeX-Template. Below are some examples of common elements you might want to include.
+
+\newpage
+\chapter*{Chapter 1: The Basics}
+\addcontentsline{toc}{chapter}{Chapter 1: The Basics}
+
+\section*{Setting the Scene}
+This is a standard section. You can use it to describe locations, introduce characters, or set the mood for your players.
+
+\subsection*{Key Locations}
+Here's a subsection. Subsections are great for breaking down information into more manageable chunks.
+\begin{itemize}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]
+    \item The Whispering Woods: Known for ancient spirits and rare herbs.
+    \item The Sunken City of Eldoria: A lost civilization beneath the waves.
+    \item The Obsidian Tower: A dark mage's lair, shrouded in mystery.
+\end{itemize}
+
+\subsection*{Important NPCs}
+\begin{enumerate}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]
+    \item Elara Meadowlight: A wise elven ranger.
+    \item Grommash Stonehand: A gruff dwarven blacksmith.
+    \item Seraphina Brightspark: A curious gnomish inventor.
+\end{enumerate}
+
+\newpage
+\chapter*{Chapter 2: Adventure Hooks \& Encounters}
+\addcontentsline{toc}{chapter}{Chapter 2: Adventure Hooks \& Encounters}
+
+\section*{Sample Adventure Hook}
+A local lord's prized artifact has been stolen! The tracks lead into the Whispering Woods. The reward is substantial, but so are the dangers.
+
+\begin{DndComment}{DM's Notes}
+    Remember to foreshadow the villain's motives and abilities early on. Perhaps a strange symbol is left at the crime scene, hinting at a cult.
+\end{DndComment}
+
+\subsection*{Encounter Table}
+\begin{DndTable}[header=Forest Encounters]{lX}
+    \textbf{d6} & \textbf{Encounter} \\
+    1 & 2d4 Goblins ambushing from the trees. \\
+    2 & A lost merchant caravan, in need of aid. \\
+    3 & A bewildered Dryad, distraught over a felled tree. \\
+    4 & A pack of 1d6 Wolves, on the hunt. \\
+    5 & Evidence of a passing Owlbear, but no creature. \\
+    6 & A hidden shrine to a forgotten deity.
+\end{DndTable}
+
+\section*{Combat Tactics}
+When designing combat, consider the environment, monster abilities, and player strengths. Use cover, elevation, and terrain to make battles more dynamic.
+
+\subsection*{Magic Items}
+\begin{itemize}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]
+    \item \textbf{Potion of Healing:} Restores 2d4+2 hit points.
+    \item \textbf{Sentinel Shield:} While holding this shield, you have advantage on initiative rolls and Wisdom (Perception) checks.
+    \item \textbf{Flame Tongue (Longsword):} As a bonus action, you can speak the command word to cause flames to erupt from the blade.
+\end{itemize}
+
+% Optional image example
+\newpage
+\section*{Visuals}
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{DND-5e-LaTeX-Template/img/scrot.jpg}
+    \captionof{figure}{A placeholder image demonstrating image inclusion. Replace with your own maps or artwork.}
+\end{center}
+
+
+\chapter*{Further Chapters}
+\addcontentsline{toc}{chapter}{Further Chapters}
+Use additional chapters and sections to expand on your world, adventures, and characters.
+
+{% for i in range(3, num_chapters + 1) %}
+\chapter*{Chapter {{ i }}}
+\addcontentsline{toc}{chapter}{Chapter {{ i }}}
+(This is the start of Chapter {{ i }}.)
+\newpage
+{% endfor %}
+
+\end{document}
+
