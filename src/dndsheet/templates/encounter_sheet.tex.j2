@@ -1,0 +1,114 @@
+\documentclass[letterpaper,oneside,openany]{dndbook}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{longtable} % For stat block tables
+\usepackage{enumitem}  % For lists within stat blocks
+
+\title{D&D Encounter: {{ encounter.monsters[0].name | capitalize if encounter.monsters else "Unnamed" }} }
+\author{D&D Sheet Generator}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\chapter*{Encounter Details}
+\addcontentsline{toc}{chapter}{Encounter Details}
+
+\section*{Summary}
+\begin{DndTable}[header=Encounter Overview]{lX}
+    \textbf{Party Size} & {{ party_size }} \\
+    \textbf{Average Party Level} & {{ average_party_level }} \\
+    \textbf{Total Raw XP} & {{ encounter.total_raw_xp }} \\
+    \textbf{Adjusted XP} & {{ encounter.adjusted_xp }} \\
+    \textbf{Difficulty} & \textbf{ {{ encounter.difficulty }} } \\
+\end{DndTable}
+
+\section*{Monsters in Encounter}
+\begin{itemize}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]
+{% for monster in encounter.monsters %}
+    \item {{ monster.name }} (CR {{ monster.cr }}, XP {{ monster.xp }})
+{% endfor %}
+\end{itemize}
+
+\section*{Initiative Tracker}
+\begin{longtable}{|p{4cm}|p{2cm}|p{4cm}|}
+    \hline
+    \textbf{Character/Monster} & \textbf{Initiative} & \textbf{HP} \\
+    \hline
+    \endhead
+    \hline
+    \endfoot
+    \rule{0pt}{0.7cm} & & \\ \hline
+    \rule{0pt}{0.7cm} & & \\ \hline
+    \rule{0pt}{0.7cm} & & \\ \hline
+    \rule{0pt}{0.7cm} & & \\ \hline
+    \rule{0pt}{0.7cm} & & \\ \hline
+    \rule{0pt}{0.7cm} & & \\ \hline
+    \rule{0pt}{0.7cm} & & \\ \hline
+    \rule{0pt}{0.7cm} & & \\ \hline
+    \rule{0pt}{0.7cm} & & \\ \hline
+    \rule{0pt}{0.7cm} & & \\ \hline
+    \rule{0pt}{0.7cm} & & \\ \hline
+    \rule{0pt}{0.7cm} & & \\ \hline
+    \rule{0pt}{0.7cm} & & \\ \hline
+    \rule{0pt}{0.7cm} & & \\ \hline
+    \rule{0pt}{0.7cm} & & \\ \hline
+\end{longtable}
+
+\newpage
+\chapter*{Monster Stat Blocks}
+\addcontentsline{toc}{chapter}{Monster Stat Blocks}
+
+{% for monster in encounter.monsters %}
+\begin{DndMonster}{ {{ monster.name }} }
+    \DndMonsterType{ {{ monster.size }} {{ monster.type }}, {{ monster.alignment }} }
+    \DndMonsterAC{ {{ monster.ac }} }
+    \DndMonsterHP{ {{ monster.hp }} ({{ monster.hit_dice }}) }
+    \DndMonsterSpeed{ {{ monster.speed }} }
+    \DndMonsterStats{ {{ monster.strength }}, {{ monster.dexterity }}, {{ monster.constitution }}, {{ monster.intelligence }}, {{ monster.wisdom }}, {{ monster.charisma }} }
+    \DndMonsterSkills{
+        {% for skill, mod in monster.skills.items() %}
+            {{ skill.value.replace("_", " ").title() }} {{ "%+d"|format(mod) }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    }
+    \DndMonsterSaves{
+        {% for ability, mod in monster.saving_throws.items() %}
+            {{ ability.value.capitalize() }} {{ "%+d"|format(mod) }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    }
+    \DndMonsterDamageVulnerabilities{ {{ monster.damage_vulnerabilities | join(", ") if monster.damage_vulnerabilities else "—" }} }
+    \DndMonsterDamageResistances{ {{ monster.damage_resistances | join(", ") if monster.damage_resistances else "—" }} }
+    \DndMonsterDamageImmunities{ {{ monster.damage_immunities | join(", ") if monster.damage_immunities else "—" }} }
+    \DndMonsterConditionImmunities{ {{ monster.condition_immunities | join(", ") if monster.condition_immunities else "—" }} }
+    \DndMonsterSenses{ {{ monster.senses }} }
+    \DndMonsterLanguages{ {{ monster.languages }} }
+    \DndMonsterCR{ {{ monster.cr }} ({{ monster.xp }} XP) }
+
+    {% if monster.traits %}
+    \DndMonsterTraits
+        {% for trait in monster.traits %}
+        \DndMonsterTrait{ {{ trait.name }}}{ {{ trait.desc }} }
+        {% endfor %}
+    {% endif %}
+
+    \DndMonsterActions
+        {% for action in monster.actions %}
+        \DndMonsterAction{ {{ action.name }}}{ {{ action.desc }} }
+        {% endfor %}
+    
+    {% if monster.legendary_actions %}
+    \DndMonsterLegendaryActions
+        {% for l_action in monster.legendary_actions %}
+        \DndMonsterAction{ {{ l_action.name }}}{ {{ l_action.desc }} }
+        {% endfor %}
+    {% endif %}
+
+\end{DndMonster}
+\newpage
+{% endfor %}
+
+\end{document}

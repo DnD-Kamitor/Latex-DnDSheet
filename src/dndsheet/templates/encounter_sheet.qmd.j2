@@ -1,0 +1,115 @@
+---
+title: "D&D Encounter: {{ encounter.monsters[0].name | capitalize if encounter.monsters else "Unnamed" }}"
+author: "D&D Sheet Generator"
+date: "{{ now().strftime('%Y-%m-%d') }}"
+format:
+  pdf:
+    documentclass: dndbook # Assumes dndbook is available in Quarto
+    geometry: "letterpaper,oneside,margin=1in"
+    header-includes:
+      - \usepackage[utf8]{inputenc}
+      - \usepackage{graphicx}
+      - \usepackage{dnd}
+      - \usepackage{dndbook}
+      # This part for dndbook custom commands might be tricky, Quarto might not process it easily
+execute:
+  echo: false
+---
+
+# Encounter Details
+
+## Summary
+
+| **Field**              | **Value**                           |
+|:-----------------------|:------------------------------------|
+| **Party Size**         | {{ party_size }}                    |
+| **Average Party Level**| {{ average_party_level }}           |
+| **Total Raw XP**       | {{ encounter.total_raw_xp }}        |
+| **Adjusted XP**        | {{ encounter.adjusted_xp }}         |
+| **Difficulty**         | **{{ encounter.difficulty }}**      |
+
+## Monsters in Encounter
+
+{% for monster in encounter.monsters %}
+*   {{ monster.name }} (CR {{ monster.cr }}, XP {{ monster.xp }})
+{% endfor %}
+
+## Initiative Tracker
+
+| Character/Monster | Initiative | HP |
+|:------------------|:-----------|:---|
+|                   |            |    |
+|                   |            |    |
+|                   |            |    |
+|                   |            |    |
+|                   |            |    |
+|                   |            |    |
+|                   |            |    |
+|                   |            |    |
+|                   |            |    |
+|                   |            |    |
+|                   |            |    |
+|                   |            |    |
+|                   |            |    |
+|                   |            |    |
+|                   |            |    |
+
+# Monster Stat Blocks
+
+{% for monster in encounter.monsters %}
+## {{ monster.name }}
+*   **{{ monster.size }} {{ monster.type }}, {{ monster.alignment }}**
+*   **Armor Class** {{ monster.ac }}
+*   **Hit Points** {{ monster.hp }} ({{ monster.hit_dice }})
+*   **Speed** {{ monster.speed }}
+
+| STR | DEX | CON | INT | WIS | CHA |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| {{ monster.strength }} | {{ monster.dexterity }} | {{ monster.constitution }} | {{ monster.intelligence }} | {{ monster.wisdom }} | {{ monster.charisma }} |
+
+*   **Saving Throws**:
+    {% for ability, mod in monster.saving_throws.items() %}
+    {{ ability.value.capitalize() }} {{ "%+d"|format(mod) }}{% if not loop.last %}, {% endif %}
+    {% else %}
+    —
+    {% endfor %}
+*   **Skills**:
+    {% for skill, mod in monster.skills.items() %}
+    {{ skill.value.replace("_", " ").title() }} {{ "%+d"|format(mod) }}{% if not loop.last %}, {% endif %}
+    {% else %}
+    —
+    {% endfor %}
+*   **Damage Vulnerabilities**: {{ monster.damage_vulnerabilities | join(", ") if monster.damage_vulnerabilities else "None" }}
+*   **Damage Resistances**: {{ monster.damage_resistances | join(", ") if monster.damage_resistances else "None" }}
+*   **Damage Immunities**: {{ monster.damage_immunities | join(", ") if monster.damage_immunities else "None" }}
+*   **Condition Immunities**: {{ monster.condition_immunities | join(", ") if monster.condition_immunities else "None" }}
+*   **Senses**: {{ monster.senses }}
+*   **Languages**: {{ monster.languages }}
+*   **Challenge** {{ monster.cr }} ({{ monster.xp }} XP)
+
+{% if monster.traits %}
+### Traits
+{% for trait in monster.traits %}
+*   ***{{ trait.name }}.*** {{ trait.desc }}
+{% endfor %}
+{% endif %}
+
+### Actions
+{% for action in monster.actions %}
+*   ***{{ action.name }}.*** {{ action.desc }}
+{% endfor %}
+
+{% if monster.legendary_actions %}
+### Legendary Actions
+{% for l_action in monster.legendary_actions %}
+*   ***{{ l_action.name }}.*** {{ l_action.desc }}
+{% endfor %}
+{% endif %}
+
+{% if monster.description %}
+### Description
+{{ monster.description }}
+{% endif %}
+
+---
+{% endfor %}

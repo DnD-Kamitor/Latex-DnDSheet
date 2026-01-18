@@ -1,0 +1,82 @@
+#encounter-screen-container {
+    layout: vertical;
+    overflow: auto;
+    padding: 1;
+}
+
+#encounter-title {
+    text-align: center;
+    color: $accent;
+    text-style: bold;
+    margin-bottom: 1;
+}
+
+#party-info {
+    height: auto;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    border: round white;
+    padding: 1;
+    margin-bottom: 1;
+    align: center middle;
+}
+
+#party-info Label {
+    width: 1fr;
+    text-align: right;
+    margin-right: 1;
+}
+
+#party-info Input {
+    width: 2fr;
+    max-width: 10;
+}
+
+
+#monster-tables-container {
+    height: 1fr;
+    layout: horizontal;
+    margin-bottom: 1;
+    border: round white;
+}
+
+#available-monsters-panel, #encounter-monsters-panel {
+    width: 1fr;
+    layout: vertical;
+    border: tall $primary-darken-1;
+    margin: 1;
+    padding: 0 1;
+}
+
+#available-monsters-table, #encounter-monsters-table {
+    height: 1fr;
+    margin-top: 1;
+    border: panel $surface;
+}
+
+.action-button {
+    width: 100%;
+    margin-top: 1;
+}
+
+#encounter-stats {
+    height: auto;
+    border: round white;
+    padding: 1;
+    margin-bottom: 1;
+    align: center middle;
+}
+
+#xp-display, #difficulty-display {
+    width: 1fr;
+    text-align: center;
+    text-style: bold;
+}
+
+Button#btn-generate-encounter {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1;
+}

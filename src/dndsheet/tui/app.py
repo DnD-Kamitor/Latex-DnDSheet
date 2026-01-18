@@ -39,6 +39,7 @@ def main() -> int:
     from .screens import CharacterFileLoadScreen, CharacterViewScreen
     from .character_creator import CharacterBasicInfoScreen
     from .spell_screen import SpellScreen
+    from .encounter_screen import EncounterScreen # New import
 
     # Import data models
     from ..character import Character
@@ -106,6 +107,9 @@ def main() -> int:
                 yield Static("🎪 Props & Handouts", classes="section-title")
                 yield Button("Create Wanted Poster", id="btn-poster", variant="default")
 
+                yield Static("👹 DM Tools", classes="section-title")
+                yield Button("Create Encounter", id="btn-encounter", variant="default") # New button
+
                 yield Static("", classes="menu-section")
                 yield Button("❌ Exit", id="btn-exit", variant="error")
 
@@ -125,6 +129,8 @@ def main() -> int:
                 self.create_empty_book()
             elif button_id == "btn-poster":
                 self.create_wanted_poster()
+            elif button_id == "btn-encounter": # New button handler
+                self.app.push_screen("encounter_screen")
             else:
                 self.app.notify(f"Feature not yet implemented: {button_id}", severity="warning")
 
@@ -305,6 +311,7 @@ def main() -> int:
             "character_create": CharacterBasicInfoScreen,
             "character_view": CharacterViewScreen,
             "spell_screen": SpellScreen,
+            "encounter_screen": EncounterScreen, # New screen
         }
 
         BINDINGS = [

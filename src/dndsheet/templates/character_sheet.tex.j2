@@ -2,32 +2,34 @@
 
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{longtable}
 \usepackage{multicol}
+\usepackage{enumitem}
 
 \title{ {{ character.name }} }
 \author{ {{ character.player_name or "Player" }} }
-\date{}
+\date{\today}
 
 \begin{document}
+\maketitle
+\thispagestyle{empty}
 
-\chapter*{ {{ character.name }} }
-\addcontentsline{toc}{chapter}{ {{ character.name }} }
-
+% --- Page 1: Core Info ---
 \section*{Character Details}
-
 \begin{DndTable}[header=Basic Information]{lX}
+    \textbf{Name} & {{ character.name }} \\
+    \textbf{Player} & {{ character.player_name or "" }} \\
+    \textbf{Race} & {{ character.race }} \\
     \textbf{Class} & {{ character.character_class }} \\
     \textbf{Level} & {{ character.level }} \\
-    \textbf{Race} & {{ character.race }} \\
-{% if character.background %}    \textbf{Background} & {{ character.background }} \\
-{% endif %}{% if character.alignment %}    \textbf{Alignment} & {{ character.alignment }} \\
-{% endif %}{% if character.experience_points > 0 %}    \textbf{Experience} & {{ "{:,}".format(character.experience_points) }} XP \\
-{% endif %}\end{DndTable}
+    \textbf{Background} & {{ character.background or "" }} \\
+    \textbf{Alignment} & {{ character.alignment or "" }} \\
+\end{DndTable}
 
-\section*{Ability Scores}
-
+\subsection*{Ability Scores}
 \begin{DndTable}[header=Ability Scores]{lcccc}
-    \textbf{Ability} & \textbf{Score} & \textbf{Modifier} & \textbf{Save} & \textbf{Prof?} \\
+    \textbf{Ability} & \textbf{Score} & \textbf{Mod} & \textbf{Save} & \textbf{Prof?} \\
     Strength     & {{ character.ability_scores.strength }} & {{ "%+d"|format(character.ability_scores.strength_modifier) }} & {{ "%+d"|format(character.get_saving_throw(Ability.STRENGTH)) }} & {% if Ability.STRENGTH in character.saving_throw_proficiencies %}Yes{% else %}No{% endif %} \\
     Dexterity    & {{ character.ability_scores.dexterity }} & {{ "%+d"|format(character.ability_scores.dexterity_modifier) }} & {{ "%+d"|format(character.get_saving_throw(Ability.DEXTERITY)) }} & {% if Ability.DEXTERITY in character.saving_throw_proficiencies %}Yes{% else %}No{% endif %} \\
     Constitution & {{ character.ability_scores.constitution }} & {{ "%+d"|format(character.ability_scores.constitution_modifier) }} & {{ "%+d"|format(character.get_saving_throw(Ability.CONSTITUTION)) }} & {% if Ability.CONSTITUTION in character.saving_throw_proficiencies %}Yes{% else %}No{% endif %} \\
@@ -35,13 +37,11 @@
     Wisdom       & {{ character.ability_scores.wisdom }} & {{ "%+d"|format(character.ability_scores.wisdom_modifier) }} & {{ "%+d"|format(character.get_saving_throw(Ability.WISDOM)) }} & {% if Ability.WISDOM in character.saving_throw_proficiencies %}Yes{% else %}No{% endif %} \\
     Charisma     & {{ character.ability_scores.charisma }} & {{ "%+d"|format(character.ability_scores.charisma_modifier) }} & {{ "%+d"|format(character.get_saving_throw(Ability.CHARISMA)) }} & {% if Ability.CHARISMA in character.saving_throw_proficiencies %}Yes{% else %}No{% endif %} \\
 \end{DndTable}
-
 \begin{DndComment}{Proficiency Bonus}
-    At level {{ character.level }}, the proficiency bonus is \textbf{ {{ "%+d"|format(character.proficiency_bonus) }} }.
+    Proficiency Bonus: \textbf{ {{ "%+d"|format(character.proficiency_bonus) }} }
 \end{DndComment}
 
-\section*{Combat Stats}
-
+\subsection*{Combat Stats}
 \begin{DndTable}[header=Combat]{lX}
     \textbf{Armor Class} & {{ character.armor_class }} \\
     \textbf{Initiative} & {{ "%+d"|format(character.initiative) }} \\
@@ -51,78 +51,138 @@
 {% if character.inspiration %}    \textbf{Inspiration} & Yes \\
 {% endif %}\end{DndTable}
 
-\section*{Skills}
-
+\subsection*{Skills}
 \begin{multicols}{2}
-\begin{DndTable}[header=All Skills]{lcc}
+\begin{DndTable}[header=Skills]{lcc}
     \textbf{Skill} & \textbf{Bonus} & \textbf{Prof?} \\
 {% for skill in ALL_SKILLS %}    {{ skill.value.replace("_", " ").title() }} & {{ "%+d"|format(character.get_skill_modifier(skill)) }} & {% if skill in character.skill_proficiencies %}*{% endif %} \\
 {% endfor %}\end{DndTable}
 \end{multicols}
 
-{% if character.spellcasting_ability %}
+% --- Page 2: Spellcasting & Features ---
 \newpage
+{% if character.spellcasting_ability %}
 \section*{Spellcasting}
-
 \begin{DndTable}[header=Spellcasting]{lX}
-    \textbf{Spellcasting Class} & {{ character.character_class }} \\
     \textbf{Spellcasting Ability} & {{ character.spellcasting_ability.value.title() }} \\
     \textbf{Spell Save DC} & {{ character.spell_save_dc }} \\
     \textbf{Spell Attack Bonus} & {{ "%+d"|format(character.spell_attack_bonus) }} \\
 \end{DndTable}
 
-{% set prepared_spells = character.spellbook.get_prepared_spells_by_level() %}
-
-{% if prepared_spells[0] %}
-\subsection*{Cantrips}
-\begin{itemize}
-{% for spell in prepared_spells[0] | sort(attribute='name') %}
-    \item {{ spell.name }}
+\subsection*{Spell Slots}
+\begin{DndTable}[header=Spell Slots]{lccX}
+    \textbf{Level} & \textbf{Total} & \textbf{Used} & \textbf{Remaining} \\
+    Cantrips & Always Prepared & - & - \\
+{% for level, slots in character.spellbook.spell_slots.items() | sort %}
+    {{ level }}{{ 'st' if level == 1 else ('nd' if level == 2 else ('rd' if level == 3 else 'th')) }} & {{ slots.max }} & {{ slots.used }} & {{ slots.remaining }} \\
 {% endfor %}
-\end{itemize}
-{% endif %}
+\end{DndTable}
 
-{% for level in range(1, 10) %}
-{% if prepared_spells[level] %}
-\subsection*{Level {{ level }} Spells}
-\begin{itemize}
-{% for spell in prepared_spells[level] | sort(attribute='name') %}
-    \item {{ spell.name }}{% if spell.ritual %} (Ritual){% endif %}{% if spell.concentration %} (C){% endif %}
-{% endfor %}
-\end{itemize}
-{% endif %}
-{% endfor %}
-{% endif %}
-
-{% if character.spellbook.get_prepared_spells() %}
-\newpage
-\chapter*{Spellbook}
-\addcontentsline{toc}{chapter}{Spellbook}
-
+\subsection*{Prepared Spells}
+\begin{multicols}{2}
+\begin{itemize}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]
 {% for spell in character.spellbook.get_prepared_spells() %}
-\begin{DndSpell}
-    \spelllevel{
-        {% if spell.level == 0 %}
-            {{ spell.school.value }} Cantrip
-        {% else %}
-            {{ spell.level }}{{ 'st' if spell.level == 1 else ('nd' if spell.level == 2 else ('rd' if spell.level == 3 else 'th')) }}-level {{ spell.school.value }}
-        {% endif %}
-        {% if spell.ritual %}(ritual){% endif %}
-    }
-    \spellcastingtime{ {{ spell.casting_time }} }
-    \spellrange{ {{ spell.range }} }
-    \spellcomponents{ {{ spell.components_str }} }
-    \spellduration{ {{ spell.duration }}{% if spell.concentration %}, concentration{% endif %} }
-    
-    \spelltitle{ {{ spell.name }} }
-    
-    {{ spell.description }}
-    
-    {% if spell.higher_levels %}
-    \spellhigherlevel{ {{ spell.higher_levels }} }
-    {% endif %}
-\end{DndSpell}
+    \item {{ spell.name }}
+{% else %}
+    \item \underline{\hspace{4cm}}
+    \item \underline{\hspace{4cm}}
+    \item \underline{\hspace{4cm}}
+    \item \underline{\hspace{4cm}}
+    \item \underline{\hspace{4cm}}
+    \item \underline{\hspace{4cm}}
+    \item \underline{\hspace{4cm}}
+    \item \underline{\hspace{4cm}}
+    \item \underline{\hspace{4cm}}
+    \item \underline{\hspace{4cm}}
 {% endfor %}
+\end{itemize}
+\end{multicols}
 {% endif %}
 
+\section*{Features \& Traits}
+\begin{itemize}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]
+    \item \underline{\hspace{8cm}}
+    \item \underline{\hspace{8cm}}
+    \item \underline{\hspace{8cm}}
+    \item \underline{\hspace{8cm}}
+    \item \underline{\hspace{8cm}}
+\end{itemize}
+\vfill
+
+% --- Page 3: Ledgers ---
+\newpage
+\onecolumn % Ensure ledgers are full width
+\section*{Coin Ledger}
+\begin{longtable}{|p{2cm}|p{3.5cm}|p{1.5cm}|p{1.5cm}|p{1.5cm}|}
+    \hline
+    \textbf{Date} & \textbf{Description} & \textbf{Debit} & \textbf{Credit} & \textbf{Balance} \\
+    \hline
+    \endhead
+    \hline
+    \endfoot
+    {% for i in range(20) %}
+    \rule{0pt}{0.7cm} & & & & \\ \hline
+    {% endfor %}
+\end{longtable}
+
+\newpage
+\section*{Equipment Ledger}
+\begin{longtable}{|p{2cm}|p{4cm}|p{1.5cm}|X|}
+    \hline
+    \textbf{Date} & \textbf{Item} & \textbf{Qty} & \textbf{Notes} \\
+    \hline
+    \endhead
+    \hline
+    \endfoot
+    {% for i in range(20) %}
+    \rule{0pt}{0.7cm} & & & \\ \hline
+    {% endfor %}
+\end{longtable}
+
+\newpage
+\section*{Ailments Ledger}
+\begin{longtable}{|p{2cm}|p{4cm}|X|}
+    \hline
+    \textbf{Date} & \textbf{Ailment} & \textbf{Status/Notes} \\
+    \hline
+    \endhead
+    \hline
+    \endfoot
+    {% for i in range(20) %}
+    \rule{0pt}{0.7cm} & & & \\ \hline
+    {% endfor %}
+\end{longtable}
+
+\newpage
+\section*{Spells Acquired Ledger}
+\begin{longtable}{|p{2cm}|p{3.5cm}|p{1.5cm}|X|}
+    \hline
+    \textbf{Date} & \textbf{Spell Name} & \textbf{Level} & \textbf{Source/Notes} \\
+    \hline
+    \endhead
+    \hline
+    \endfoot
+    {% for i in range(20) %}
+    \rule{0pt}{0.7cm} & & & \\ \hline
+    {% endfor %}
+\end{longtable}
+
+\newpage
+\section*{Spells Cast Ledger}
+\begin{longtable}{|p{2cm}|p{3.5cm}|p{1.5cm}|X|}
+    \hline
+    \textbf{Date} & \textbf{Spell Name} & \textbf{Level} & \textbf{Encounter/Notes} \\
+    \hline
+    \endhead
+    \hline
+    \endfoot
+    {% for i in range(20) %}
+    \rule{0pt}{0.7cm} & & & \\ \hline
+    {% endfor %}
+\end{longtable}
+
+\newpage
+\section*{Character Notes}
+\textit{Use this space for character background, personality traits, allies, enemies, and other roleplaying notes.}
+\vfill
 \end{document}

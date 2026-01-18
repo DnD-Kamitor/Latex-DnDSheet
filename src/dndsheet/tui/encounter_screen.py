@@ -167,9 +167,60 @@ class EncounterScreen(Screen[None]):
 
     def generate_encounter_document(self) -> None:
         """Generates the encounter sheet PDF and QMD."""
-        # This will be implemented later, in the next steps.
-        # For now, just notify.
-        self.app.notify("Generating encounter document (PDF/QMD) is not yet implemented.", severity="warning")
+        from ..latex_generator import generate_tex_file, compile_to_pdf
+        from ..sheet_generator import render_template
+        from ..latex_env import check_dnd_template
+        from datetime import datetime
+
+        if not self.current_encounter.monsters:
+            self.app.notify("No monsters in encounter to generate.", severity="warning")
+            return
+
+        try:
+            found, location = check_dnd_template()
+            if not found:
+                self.app.notify("DND template not found. Cannot create.", severity="error")
+                return
+
+            self.app.notify("Generating encounter document...")
+            
+            # Context for templates
+            context = {
+                "encounter": self.current_encounter,
+                "party_size": self.current_encounter.party_size,
+                "average_party_level": self.current_encounter.average_party_level,
+                "now": datetime.now
+            }
+
+            safe_name = "encounter" # A generic name for now
+            if self.current_encounter.monsters:
+                first_monster_name = self.current_encounter.monsters[0].name.replace(" ", "_").lower()
+                safe_name = f"{first_monster_name}_encounter"
+            
+            # --- Generate LaTeX and PDF ---
+            latex_source = render_template("encounter_sheet.tex.j2", **context)
+            tex_filename = f"{safe_name}.tex"
+            tex_file = generate_tex_file(latex_source, Path(f"output/{tex_filename}"))
+            success_pdf, message_pdf, pdf_path = compile_to_pdf(tex_file, Path("output"))
+
+            # --- Generate QMD ---
+            qmd_source = render_template("encounter_sheet.qmd.j2", **context)
+            qmd_filename = f"{safe_name}.qmd"
+            qmd_path = Path(f"output/{qmd_filename}")
+            qmd_path.write_text(qmd_source, encoding='utf-8')
+            success_qmd = True # Assuming write_text doesn't fail silently
+
+            output_message = f"Created encounter: "
+            if success_pdf:
+                output_message += f"PDF ({pdf_path.name})"
+            if success_qmd:
+                output_message += f", QMD ({qmd_path.name})"
+            
+            self.app.notify(f"✓ {output_message}", severity="information", timeout=7)
+
+        except Exception as e:
+            log.error(f"Failed to generate encounter documents: {e}")
+            self.app.notify(f"✗ Error: {str(e)}", severity="error", timeout=10)
 
     def action_quit(self) -> None:
         """Go back to the previous screen."""
