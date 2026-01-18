@@ -35,8 +35,111 @@ The party plays as members of a military unit stationed at a remote frontier for
 - **Legate Marcus Aurelius Corvinus** – Commander of the fort, ambitious and ruthless
 - **Augur Cassia Liviana** – The fort's seer, troubled by dark visions
 - **Centurion Titus Varro** – Veteran soldier, loyal but pragmatic
-- **The Tribune** – A mysterious figure from Rome with a hidden agenda
+- **Tribune Lucius Valerius Maximus** – A mysterious figure from Rome with a hidden agenda
 - **Vercingetorix the Red** – Germanic chieftain and reluctant ally
+- **Senator Gaius Cassius Brutus** – Roman aristocrat with revolutionary ambitions
+
+## NPC OGAS Framework (Guy Sclanders Method)
+
+### Legate Marcus Aurelius Corvinus
+
+**Objective:** Secure a military triumph and consulship in Rome
+**Goal:** Possess the Spear of Mars as proof of his frontier victory
+**Agenda:** Use the artifact to gain Senate favor and advancement
+**Secret:** He's drowning in gambling debts to a powerful Senator (Brutus) who now owns him
+
+**Personality:** Blunt, aggressive, views everything through military lens
+**Speaks like:** A drill sergeant - short, commanding sentences
+**Reacts to opposition:** With anger first, calculation second
+**If threatened:** Will sacrifice subordinates to save himself
+
+### Augur Cassia Liviana
+
+**Objective:** Prevent divine catastrophe and protect Rome from Mars' wrath
+**Goal:** Destroy the Spear of Mars before it corrupts anyone else
+**Agenda:** Guide the party toward making the right choice without forcing them
+**Secret:** She's Mars' daughter (demigod) and can feel the spear calling to her bloodline
+
+**Personality:** Quiet, intense, speaks in riddles when nervous
+**Speaks like:** An oracle - cryptic, layered meanings, pauses between thoughts
+**Reacts to opposition:** With sadness rather than anger; tries to show visions
+**If threatened:** Will sacrifice herself to stop the spear
+
+### Centurion Titus Varro
+
+**Objective:** Survive his final year of service and retire with honor
+**Goal:** Keep his soldiers alive and maintain order at the fort
+**Agenda:** Support whoever seems most competent—party or commander
+**Secret:** He knows the Legate is corrupt but can't prove it; 20 years of service make him complicit
+
+**Personality:** Pragmatic, weary, dark humor to cope with violence
+**Speaks like:** A veteran NCO - profane, direct, occasional wisdom
+**Reacts to opposition:** With exhausted reason; "I've seen this before"
+**If threatened:** Will choose his men over his commander every time
+
+### Tribune Lucius Valerius Maximus
+
+**Objective:** Earn respect as a "real Roman" despite his aristocratic birth
+**Goal:** Complete his secret mission from Senator Brutus (destroy the spear)
+**Agenda:** Manipulate the party into destroying it so he gets credit
+**Secret:** He's Senator Brutus' illegitimate son, desperate to prove his worth
+
+**Personality:** Overconfident, theatrical, masks insecurity with arrogance
+**Speaks like:** An aristocrat - flowery language, quotes philosophers, condescending
+**Reacts to opposition:** With wounded pride; becomes petty and vindictive
+**If threatened:** Will betray anyone to survive; coward beneath the bravado
+
+### Vercingetorix the Red
+
+**Objective:** Protect his people from Roman expansion
+**Goal:** Recover the Spear of Mars (killed his grandfather, tribe's sacred enemy)
+**Agenda:** Use the party to get past Roman defenses, then take the spear by force or alliance
+**Secret:** He's dying from a wasting disease; this is his last campaign; wants his death to mean something
+
+**Personality:** Noble warrior, tired of war, respects strength and honesty
+**Speaks like:** Poetic warrior - comparisons to nature, warrior's code
+**Reacts to opposition:** Tests strength first, respects those who stand firm
+**If threatened:** Will fight to the death but prefers honorable single combat
+
+### Senator Gaius Cassius Brutus
+
+**Objective:** "Restore the Republic" (overthrow the Emperor, install himself as First Citizen)
+**Goal:** Acquire the Spear of Mars to assassinate the Emperor during his Triumph
+**Agenda:** Manipulate everyone as pawns; eliminate witnesses once spear is secured
+**Secret:** He's already made pacts with three other gods (Jupiter, Pluto, Bellona) promising them Mars' power if they support his coup
+
+**Personality:** Charismatic sociopath, genuinely believes he's Rome's savior
+**Speaks like:** Statesman - rhetorical questions, appeals to Roman values, very persuasive
+**Reacts to opposition:** With charm first, then legal/political pressure, then assassination
+**If threatened:** Flees and regroups; will burn Rome before admitting failure
+
+### Mars (God of War)
+
+**Objective:** Reclaim his honor after mortals stole and destroyed his divine weapon
+**Goal:** Make the party understand the consequences of defying a god
+**Agenda:** Test their worth—if strong, make them his champions; if weak, destroy them
+**Secret:** He's secretly proud they destroyed the corrupted spear; it had become a blight on his name
+
+**Personality:** Wrathful but honorable, respects courage above all
+**Speaks like:** God of war - imperious, archaic Latin mixed with English, SHORT and LOUD
+**Reacts to opposition:** With fury but also respect; violence is prayer to him
+**If threatened:** Cannot truly die; will curse them across lifetimes if dishonored
+
+## Using OGAS in Play
+
+**When NPCs appear:**
+1. Start with their **Goal** - what they want THIS SESSION
+2. Use their **Agenda** - HOW they'll try to get it
+3. Reveal **Objective** through multiple sessions
+4. Drop **Secret** hints for clever players to discover
+
+**Example: When party meets Legate (Session 1)**
+- Goal: Get them to retrieve spear → Direct orders
+- Agenda: Establish authority → Threatens court-martial if they refuse
+- Objective leak: "Securing this artifact will echo all the way to Rome"
+- Secret hint: Cassia whispers, "The Legate is not his own master"
+
+**If party goes off-script:** NPCs pursue their OGAS regardless of party actions. This makes world feel reactive and alive.
 
 ## The Central Mystery
 
