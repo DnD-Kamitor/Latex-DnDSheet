@@ -65,3 +65,6 @@ Thumbs.db
 output/
 temp/
 .env
+
+# Auto Claude data directory
+.auto-claude/

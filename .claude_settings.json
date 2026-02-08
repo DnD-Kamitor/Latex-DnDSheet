@@ -1,0 +1,39 @@
+{
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true
+  },
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Read(./**)",
+      "Write(./**)",
+      "Edit(./**)",
+      "Glob(./**)",
+      "Grep(./**)",
+      "Read(/home/chris/Documents/Latex-DnDSheet/.auto-claude/worktrees/tasks/002-roman-campaign-scaffolding-no-content-yet/**)",
+      "Write(/home/chris/Documents/Latex-DnDSheet/.auto-claude/worktrees/tasks/002-roman-campaign-scaffolding-no-content-yet/**)",
+      "Edit(/home/chris/Documents/Latex-DnDSheet/.auto-claude/worktrees/tasks/002-roman-campaign-scaffolding-no-content-yet/**)",
+      "Glob(/home/chris/Documents/Latex-DnDSheet/.auto-claude/worktrees/tasks/002-roman-campaign-scaffolding-no-content-yet/**)",
+      "Grep(/home/chris/Documents/Latex-DnDSheet/.auto-claude/worktrees/tasks/002-roman-campaign-scaffolding-no-content-yet/**)",
+      "Read(/home/chris/Documents/Latex-DnDSheet/.auto-claude/worktrees/tasks/002-roman-campaign-scaffolding-no-content-yet/.auto-claude/specs/002-roman-campaign-scaffolding-no-content-yet/**)",
+      "Write(/home/chris/Documents/Latex-DnDSheet/.auto-claude/worktrees/tasks/002-roman-campaign-scaffolding-no-content-yet/.auto-claude/specs/002-roman-campaign-scaffolding-no-content-yet/**)",
+      "Edit(/home/chris/Documents/Latex-DnDSheet/.auto-claude/worktrees/tasks/002-roman-campaign-scaffolding-no-content-yet/.auto-claude/specs/002-roman-campaign-scaffolding-no-content-yet/**)",
+      "Read(/home/chris/Documents/Latex-DnDSheet/.auto-claude/**)",
+      "Write(/home/chris/Documents/Latex-DnDSheet/.auto-claude/**)",
+      "Edit(/home/chris/Documents/Latex-DnDSheet/.auto-claude/**)",
+      "Glob(/home/chris/Documents/Latex-DnDSheet/.auto-claude/**)",
+      "Grep(/home/chris/Documents/Latex-DnDSheet/.auto-claude/**)",
+      "Bash(*)",
+      "WebFetch(*)",
+      "WebSearch(*)",
+      "mcp__context7__resolve-library-id(*)",
+      "mcp__context7__get-library-docs(*)",
+      "mcp__graphiti-memory__search_nodes(*)",
+      "mcp__graphiti-memory__search_facts(*)",
+      "mcp__graphiti-memory__add_episode(*)",
+      "mcp__graphiti-memory__get_episodes(*)",
+      "mcp__graphiti-memory__get_entity_edge(*)"
+    ]
+  }
+}
