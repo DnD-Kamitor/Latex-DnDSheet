@@ -5,7 +5,7 @@ author: "Campaign Module"
 date: "2026-01-18"
 format:
   pdf:
-    documentclass: dndbook # Assumes dndbook is available in Quarto
+    documentclass: book # Assumes dndbook is available in Quarto
     geometry: "letterpaper,oneside,margin=1in"
     header-includes:
       - \usepackage[utf8]{inputenc}

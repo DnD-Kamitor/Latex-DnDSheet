@@ -1,0 +1,1470 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+\usepackage[utf8]{inputenc}
+\usepackage{dnd}
+\usepackage{dndbook}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={The Shadow of Mars},
+  pdfauthor={Campaign Module},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{The Shadow of Mars}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{A Roman Campaign in Five Acts}
+\author{Campaign Module}
+\date{2026-01-18}
+\begin{document}
+\frontmatter
+\maketitle
+
+
+\mainmatter
+\chapter{Introduction}\label{introduction}
+
+\section{Campaign Overview}\label{campaign-overview}
+
+\emph{The Shadow of Mars} is a 5-session campaign set in a fantastical
+Roman world where the gods are real, auguries matter, and destiny can be
+changed---or embraced.
+
+The party plays as members of a military unit stationed at a remote
+frontier fort. When dark omens appear and a powerful artifact is
+unearthed, they must decide whether to serve Rome, the gods, or their
+own ambitions.
+
+\textbf{Levels:} Characters start at level 3 and advance to level 7 by
+the campaign's end.
+
+\textbf{Themes:} Duty vs.~ambition, fate vs.~free will, loyalty
+vs.~survival, divine intervention
+
+\textbf{Setting:} The campaign takes place along Rome's Germanic
+frontier in 175 AD, in an alternate world where D\&D magic exists
+alongside Roman military discipline and pantheon worship.
+
+\section{Key NPCs}\label{key-npcs}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Legate Marcus Aurelius Corvinus} -- Commander of the fort,
+  ambitious and ruthless
+\item
+  \textbf{Augur Cassia Liviana} -- The fort's seer, troubled by dark
+  visions
+\item
+  \textbf{Centurion Titus Varro} -- Veteran soldier, loyal but pragmatic
+\item
+  \textbf{Tribune Lucius Valerius Maximus} -- A mysterious figure from
+  Rome with a hidden agenda
+\item
+  \textbf{Vercingetorix the Red} -- Germanic chieftain and reluctant
+  ally
+\item
+  \textbf{Senator Gaius Cassius Brutus} -- Roman aristocrat with
+  revolutionary ambitions
+\end{itemize}
+
+\section{NPC OGAS Framework (Guy Sclanders
+Method)}\label{npc-ogas-framework-guy-sclanders-method}
+
+\subsection{Legate Marcus Aurelius
+Corvinus}\label{legate-marcus-aurelius-corvinus}
+
+\textbf{Objective:} Secure a military triumph and consulship in Rome
+\textbf{Goal:} Possess the Spear of Mars as proof of his frontier
+victory \textbf{Agenda:} Use the artifact to gain Senate favor and
+advancement \textbf{Secret:} He's drowning in gambling debts to a
+powerful Senator (Brutus) who now owns him
+
+\textbf{Personality:} Blunt, aggressive, views everything through
+military lens \textbf{Speaks like:} A drill sergeant - short, commanding
+sentences \textbf{Reacts to opposition:} With anger first, calculation
+second \textbf{If threatened:} Will sacrifice subordinates to save
+himself
+
+\subsection{Augur Cassia Liviana}\label{augur-cassia-liviana}
+
+\textbf{Objective:} Prevent divine catastrophe and protect Rome from
+Mars' wrath \textbf{Goal:} Destroy the Spear of Mars before it corrupts
+anyone else \textbf{Agenda:} Guide the party toward making the right
+choice without forcing them \textbf{Secret:} She's Mars' daughter
+(demigod) and can feel the spear calling to her bloodline
+
+\textbf{Personality:} Quiet, intense, speaks in riddles when nervous
+\textbf{Speaks like:} An oracle - cryptic, layered meanings, pauses
+between thoughts \textbf{Reacts to opposition:} With sadness rather than
+anger; tries to show visions \textbf{If threatened:} Will sacrifice
+herself to stop the spear
+
+\subsection{Centurion Titus Varro}\label{centurion-titus-varro}
+
+\textbf{Objective:} Survive his final year of service and retire with
+honor \textbf{Goal:} Keep his soldiers alive and maintain order at the
+fort \textbf{Agenda:} Support whoever seems most competent---party or
+commander \textbf{Secret:} He knows the Legate is corrupt but can't
+prove it; 20 years of service make him complicit
+
+\textbf{Personality:} Pragmatic, weary, dark humor to cope with violence
+\textbf{Speaks like:} A veteran NCO - profane, direct, occasional wisdom
+\textbf{Reacts to opposition:} With exhausted reason; ``I've seen this
+before'' \textbf{If threatened:} Will choose his men over his commander
+every time
+
+\subsection{Tribune Lucius Valerius
+Maximus}\label{tribune-lucius-valerius-maximus}
+
+\textbf{Objective:} Earn respect as a ``real Roman'' despite his
+aristocratic birth \textbf{Goal:} Complete his secret mission from
+Senator Brutus (destroy the spear) \textbf{Agenda:} Manipulate the party
+into destroying it so he gets credit \textbf{Secret:} He's Senator
+Brutus' illegitimate son, desperate to prove his worth
+
+\textbf{Personality:} Overconfident, theatrical, masks insecurity with
+arrogance \textbf{Speaks like:} An aristocrat - flowery language, quotes
+philosophers, condescending \textbf{Reacts to opposition:} With wounded
+pride; becomes petty and vindictive \textbf{If threatened:} Will betray
+anyone to survive; coward beneath the bravado
+
+\subsection{Vercingetorix the Red}\label{vercingetorix-the-red}
+
+\textbf{Objective:} Protect his people from Roman expansion
+\textbf{Goal:} Recover the Spear of Mars (killed his grandfather,
+tribe's sacred enemy) \textbf{Agenda:} Use the party to get past Roman
+defenses, then take the spear by force or alliance \textbf{Secret:} He's
+dying from a wasting disease; this is his last campaign; wants his death
+to mean something
+
+\textbf{Personality:} Noble warrior, tired of war, respects strength and
+honesty \textbf{Speaks like:} Poetic warrior - comparisons to nature,
+warrior's code \textbf{Reacts to opposition:} Tests strength first,
+respects those who stand firm \textbf{If threatened:} Will fight to the
+death but prefers honorable single combat
+
+\subsection{Senator Gaius Cassius
+Brutus}\label{senator-gaius-cassius-brutus}
+
+\textbf{Objective:} ``Restore the Republic'' (overthrow the Emperor,
+install himself as First Citizen) \textbf{Goal:} Acquire the Spear of
+Mars to assassinate the Emperor during his Triumph \textbf{Agenda:}
+Manipulate everyone as pawns; eliminate witnesses once spear is secured
+\textbf{Secret:} He's already made pacts with three other gods (Jupiter,
+Pluto, Bellona) promising them Mars' power if they support his coup
+
+\textbf{Personality:} Charismatic sociopath, genuinely believes he's
+Rome's savior \textbf{Speaks like:} Statesman - rhetorical questions,
+appeals to Roman values, very persuasive \textbf{Reacts to opposition:}
+With charm first, then legal/political pressure, then assassination
+\textbf{If threatened:} Flees and regroups; will burn Rome before
+admitting failure
+
+\subsection{Mars (God of War)}\label{mars-god-of-war}
+
+\textbf{Objective:} Reclaim his honor after mortals stole and destroyed
+his divine weapon \textbf{Goal:} Make the party understand the
+consequences of defying a god \textbf{Agenda:} Test their worth---if
+strong, make them his champions; if weak, destroy them \textbf{Secret:}
+He's secretly proud they destroyed the corrupted spear; it had become a
+blight on his name
+
+\textbf{Personality:} Wrathful but honorable, respects courage above all
+\textbf{Speaks like:} God of war - imperious, archaic Latin mixed with
+English, SHORT and LOUD \textbf{Reacts to opposition:} With fury but
+also respect; violence is prayer to him \textbf{If threatened:} Cannot
+truly die; will curse them across lifetimes if dishonored
+
+\section{Using OGAS in Play}\label{using-ogas-in-play}
+
+\textbf{When NPCs appear:} 1. Start with their \textbf{Goal} - what they
+want THIS SESSION 2. Use their \textbf{Agenda} - HOW they'll try to get
+it 3. Reveal \textbf{Objective} through multiple sessions 4. Drop
+\textbf{Secret} hints for clever players to discover
+
+\textbf{Example: When party meets Legate (Session 1)} - Goal: Get them
+to retrieve spear → Direct orders - Agenda: Establish authority →
+Threatens court-martial if they refuse - Objective leak: ``Securing this
+artifact will echo all the way to Rome'' - Secret hint: Cassia whispers,
+``The Legate is not his own master''
+
+\textbf{If party goes off-script:} NPCs pursue their OGAS regardless of
+party actions. This makes world feel reactive and alive.
+
+\section{The Central Mystery}\label{the-central-mystery}
+
+A cursed artifact called the \emph{Spear of Mars} has been unearthed
+near the fort. Legend says it once belonged to the war god himself and
+was used to kill a divine being. Now it whispers to those who touch it,
+promising power and glory while slowly corrupting their souls.
+
+The party must decide: destroy it, claim it, or deliver it to Rome?
+
+\chapter{Session 0 Questions}\label{session-0-questions}
+
+\chapter{Session 0 -- D\&D 5e (5-Session
+Module)}\label{session-0-dd-5e-5-session-module}
+
+\section{Campaign Basics}\label{campaign-basics}
+
+\begin{itemize}
+\tightlist
+\item
+  Are you okay with this being a short campaign (about 5 sessions) with
+  a clear ending?
+\item
+  Are character death and permanent consequences on the table?
+\item
+  Do you prefer more combat, more roleplay, or a balance of both?
+\item
+  Are you okay with the world reacting strongly to your choices?
+\end{itemize}
+
+\section{Tone \& Comfort}\label{tone-comfort}
+
+\begin{itemize}
+\tightlist
+\item
+  What tone do you want: serious, gritty, heroic, or light?
+\item
+  Are there any themes or topics you want to avoid?
+\item
+  Is PvP (stealing from or attacking party members) allowed?
+\item
+  Are you okay with NPC authority figures giving orders?
+\end{itemize}
+
+\section{Characters \& Party}\label{characters-party}
+
+\begin{itemize}
+\tightlist
+\item
+  Do your characters already know each other, or do they meet in session
+  1?
+\item
+  Why does your character choose to work with this group?
+\item
+  What is one clear strength your character brings to the party?
+\item
+  What is one weakness or flaw your character has?
+\end{itemize}
+
+\section{World Assumptions}\label{world-assumptions}
+
+\begin{itemize}
+\tightlist
+\item
+  Are you okay with law, rank, and social status mattering in the world?
+\item
+  Are you okay with consequences for breaking the law?
+\item
+  Should reputation follow your characters?
+\end{itemize}
+
+\section{Combat \& Play Style}\label{combat-play-style}
+
+\begin{itemize}
+\tightlist
+\item
+  Do you prefer combat to be fast and cinematic or slower and tactical?
+\item
+  Are you okay with enemies retreating or surrendering?
+\item
+  Is retreat a valid option for the party?
+\item
+  Are you okay with teamwork and positioning mattering in combat?
+\end{itemize}
+
+\section{Magic \& Gods}\label{magic-gods}
+
+\begin{itemize}
+\tightlist
+\item
+  Should magic feel common, rare, or feared?
+\item
+  Should the gods be clearly real or distant and mysterious?
+\item
+  Are omens and divine signs something you want in the game?
+\end{itemize}
+
+\section{Table Rules}\label{table-rules}
+
+\begin{itemize}
+\tightlist
+\item
+  Do we play rules as written, rules as intended, or rule of cool?
+\item
+  How should we handle rule disputes during play?
+\item
+  Are there any table rules or expectations you want to add?
+\end{itemize}
+
+\section{End of Module}\label{end-of-module}
+
+\begin{itemize}
+\tightlist
+\item
+  Are you okay if your character's story ends in death, promotion,
+  disgrace, or major change?
+\item
+  What kind of ending do you hope for: victorious, bittersweet, tragic,
+  or uncertain?
+\end{itemize}
+
+\section{Final Check}\label{final-check}
+
+\begin{itemize}
+\tightlist
+\item
+  Is there anything you need from me as DM to enjoy this campaign?
+\item
+  Is there anything you are concerned about before we start?
+\item
+  Is everyone committed to playing the full module?
+\end{itemize}
+
+\chapter{Chapter 1: Blood and Omens}\label{chapter-1-blood-and-omens}
+
+\textbf{Applying Guy Sclanders' Methodology} \emph{(Based on
+\href{https://books.google.com/books/about/The_Complete_Guide_to_Creating_Epic_Camp.html?id=0XFNvgEACAAJ}{The
+Complete Guide to Creating Epic Campaigns} and
+\href{https://www.greatgamemaster.com/dm/about-us/}{How to be a Great
+Game Master})}
+
+\section{Session Overview}\label{session-overview}
+
+The party arrives at Fort Vindolanda on the Germanic frontier. Strange
+omens plague the camp, and the party is sent to investigate a nearby
+excavation where something ancient has been unearthed.
+
+\textbf{Level:} 3 → Advance to 4 at session end \textbf{Duration:} 3-4
+hours \textbf{Key Goal:} Investigate the excavation site and decide the
+spear's fate \textbf{Theme:} Duty vs.~Free Will (first exploration)
+
+\subsection{Guy Sclanders' Principles
+Applied}\label{guy-sclanders-principles-applied}
+
+\textbf{Pressure Cooker Design:} - Time pressure: The spear is
+corrupting the fort NOW - Incomplete information: Who can be trusted? -
+Escalating stakes: Personal → Fort → Rome → Divine
+
+\textbf{OGAS Integration:} Legate, Augur, and Centurion all have clear
+goals THIS SESSION
+
+\textbf{Meaningful Choices:} No ``correct'' answer; every choice has
+consequences
+
+\section{Pre-Session Preparation}\label{pre-session-preparation}
+
+\subsection{Props \& Handouts (Physical
+Immersion)}\label{props-handouts-physical-immersion}
+
+\textbf{Essential Props:} 1. \textbf{Wax Tablet} - Write the Legate's
+orders in Latin on a small board 2. \textbf{Red Dice} - For corruption
+tracking (give corrupted players red d6s) 3. \textbf{Omen Cards} - Index
+cards with Latin phrases describing bad omens 4. \textbf{Spear Token} -
+Black painted dowel to represent the spear physically
+
+\textbf{Handout 1: Legate's Orders (Latin/English)}
+
+\begin{verbatim}
+MANDATUM LEGATI MARCI AURELII CORVINI
+
+Ad milites electos:
+Descendite in ruinas. Recuperate telum divinum.
+Nemo tangat telum nisi ego permitto.
+
+(To the chosen soldiers:
+Descend into the ruins. Recover the divine weapon.
+No one shall touch the weapon unless I permit it.)
+
+In nomine Senatus Populique Romani.
+\end{verbatim}
+
+\textbf{Handout 2: Gaulish Runes Translation}
+
+\begin{verbatim}
+GAULISH/CELTIC INSCRIPTION:
+"Atir nertos, atir bitus, atir maros"
+(Father of strength, father of life, father of death)
+
+"Ro·biđ·su in gaissos·mo dîvon-macon"
+(Here lies the spear, god-slayer)
+
+TRANSLATION:
+Here lies the God-Killer, the Spear of Broken Oaths,
+sealed by the blood of heroes. May it never taste sunlight again.
+Forged in vengeance. Quenched in divine blood.
+The son of Mars fell here. His father's wrath lingers still.
+\end{verbatim}
+
+\textbf{Handout 3: Omens Observed (Give to players as prop)} - All camp
+dogs died at midnight (no visible cause) - Sacrificial sheep had black
+livers (sign of divine curse) - Ravens fly backwards over the principia
+- Springs run red with iron-tainted water - Sentries report shadows
+moving without bodies - Legionaries hear distant war-horns (no enemy
+visible)
+
+\section{Scene 0: Cold Open (5
+minutes)}\label{scene-0-cold-open-5-minutes}
+
+\textbf{Purpose:} Hook players immediately with visceral horror (Guy
+Sclanders: ``Strong Opening'')
+
+\textbf{Start in media res - No preamble:}
+
+\textbf{Read aloud (speak slowly, with dread):} \textgreater{}
+\emph{Three nights ago.} \textgreater{} \textgreater{} You dream. All of
+you, the same dream. You stand in darkness, ankle-deep in blood that
+doesn't ripple. In the distance, a spear stands upright in the earth,
+glowing like a dying star. When you try to look away, you can't. When
+you try to wake, you can't. \textgreater{} \textgreater{} A voice---old,
+vast, furious---speaks a single word in a language you shouldn't
+understand, but do: \textgreater{} \textgreater{} \textbf{``MEUM.''
+(MINE.)} \textgreater{} \textgreater{} You wake. Your tent reeks of
+copper and smoke. Outside, the camp dogs are howling. \textgreater{}
+\textgreater{} By dawn, every dog in Fort Vindolanda is dead.
+
+\textbf{DM Direction:} Don't answer questions yet. Cut to black, then:
+
+\textbf{Read aloud:} \textgreater{} \emph{Now.} \textgreater{}
+\textgreater{} The principia. The Legate's headquarters. The air is
+thick with incense, but underneath it, you smell rot. Around the table:
+Legate Corvinus, eyes bloodshot and intense. Augur Cassia, pale as
+death, clutching a bloodstained cloth. Centurion Varro, one hand on his
+gladius, looking like he hasn't slept. \textgreater{} \textgreater{} The
+Legate speaks. His voice is iron scraping stone: \textgreater{}
+\textgreater{} ``You've been chosen. Not for honor. For survival.
+Something is beneath this fort. Something that killed sixty dogs in one
+night. Something that made the augurs vomit blood during morning
+sacrifice. We've lost four men already---two to madness, two to each
+other's blades.'' \textgreater{} \textgreater{} He unrolls a rough
+sketch of underground ruins. \textgreater{} \textgreater{} ``You're
+going down there. You're bringing it up. You're not asking questions.''
+\textgreater{} \textgreater{} Across the table, the Augur whispers:
+``\emph{Mars aversus est.} The god of war has turned his face from us.''
+
+\textbf{Pressure Cooker Element:} Players don't control the situation
+yet---they're already deep in crisis
+
+\section{Scene 1: Meeting the Legate}\label{scene-1-meeting-the-legate}
+
+The party is summoned to meet \textbf{Legate Marcus Aurelius Corvinus}
+in the principia. He's a hard man in his forties, scarred and ambitious.
+
+\textbf{Legate's Briefing:} - Three days ago, a work crew digging a new
+well discovered ancient ruins beneath the fort - They unearthed an iron
+spear covered in strange runes - That night, all the camp dogs died -
+The next day, the augurs found corrupted omens: black livers, reversed
+bird flights - One worker touched the spear and went mad, killing two
+companions before being subdued - The Legate wants the party to go down
+into the ruins, secure the artifact, and bring it to him
+
+\textbf{Complications:} - \textbf{Augur Cassia Liviana} interrupts,
+warning that the omens forbid disturbing the spear - \textbf{Centurion
+Varro} suggests destroying it immediately - The Legate overrules them
+both---Rome must possess this weapon
+
+\textbf{Decision Point:} Will the party obey orders or heed the augur's
+warning?
+
+\section{Scene 2: Descent into the
+Ruins}\label{scene-2-descent-into-the-ruins}
+
+The excavation site is a crude shaft dug through Roman stonework into
+older Germanic structures. The air grows cold as the party descends.
+
+\textbf{Exploration:} - Ancient Germanic temple dedicated to a forgotten
+war god - Walls covered in bronze age runes (DC 15 History or Religion
+to read) - Runes tell a story: \emph{``Here lies the God-Killer, the
+Spear of Broken Oaths, sealed by the blood of heroes. May it never taste
+sunlight again.''} - Three chambers: 1. \textbf{Hall of Shields} --
+Dozens of ancient shields line the walls, some bearing symbols of
+forgotten tribes 2. \textbf{Chamber of Chains} -- Iron chains hang from
+ceiling, sized for something enormous 3. \textbf{The Vault} -- Central
+chamber where the spear was found, now guarded by \textbf{animated
+armor} (2x) possessed by vengeful spirits
+
+\textbf{Combat Encounter:} 2 Animated Armor (CR 1 each) - The spirits
+scream: ``DO NOT TAKE THE SPEAR!'' - If defeated: They dissolve,
+whispering ``You have doomed us all''
+
+\section{Scene 3: The Spear}\label{scene-3-the-spear}
+
+The \textbf{Spear of Mars} rests on a stone altar, surrounded by broken
+chains. It's eight feet long, made of black iron, covered in glowing red
+runes.
+
+\textbf{Mechanics:} - Anyone who touches it must make a DC 14 Wisdom
+saving throw - \textbf{Failure:} Visions of glory and conquest flood
+their mind. They gain 1 level of corruption (track this) -
+\textbf{Success:} They resist but feel its pull
+
+\textbf{Properties (if attuned):} - +2 magic weapon - Deals an extra 1d8
+necrotic damage - Disadvantage on Wisdom saving throws - User becomes
+increasingly aggressive and paranoid
+
+\textbf{Roleplaying:} The spear whispers promises: - ``You could be a
+hero'' - ``Rome will kneel before you'' - ``Your enemies will break like
+wheat''
+
+\section{Scene 4: Return to the
+Surface}\label{scene-4-return-to-the-surface}
+
+As the party emerges, they find the fort in chaos: - The mad worker has
+escaped his bonds - He's killed three guards and is rampaging through
+the camp - He's screaming: ``THE SPEAR CALLS FOR BLOOD!''
+
+\textbf{Combat Encounter:} Corrupted Worker (use \textbf{Berserker} stat
+block, CR 2) - If the party has the spear, he focuses on whoever carries
+it - Dies screaming: ``Mars\ldots demands\ldots sacrifice\ldots{}''
+
+\section{Conclusion}\label{conclusion}
+
+The Legate demands the spear. The Augur begs them to destroy it.
+Centurion Varro looks to the party for guidance.
+
+\textbf{Key Questions:} - Do they give the spear to the Legate? - Do
+they try to destroy it? - Does anyone attune to it?
+
+\textbf{Advance to Level 4}
+
+\section{DM Notes}\label{dm-notes}
+
+\subsection{Roman Military Ranks (for
+reference)}\label{roman-military-ranks-for-reference}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Legate} -- Commander of the legion (like a general)
+\item
+  \textbf{Tribune} -- Staff officer from Rome (aristocrat)
+\item
+  \textbf{Centurion} -- Company commander (60-80 men)
+\item
+  \textbf{Optio} -- Second-in-command to centurion
+\item
+  \textbf{Legionary} -- Standard soldier
+\end{itemize}
+
+\subsection{Corruption Mechanic}\label{corruption-mechanic}
+
+Track corruption levels (0-5) for any character who touches or attunes
+to the spear: - \textbf{Level 1:} Disturbing dreams of conquest -
+\textbf{Level 2:} Disadvantage on Wisdom saves - \textbf{Level 3:} Must
+succeed DC 12 Wisdom save to retreat from combat - \textbf{Level 4:}
+Must succeed DC 14 Wisdom save to avoid attacking allies when bloodied -
+\textbf{Level 5:} Fully corrupted, becomes NPC under DM control
+
+\subsection{Optional Encounters}\label{optional-encounters}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Scouts' Report:} Germanic tribe activity increased in the
+  forest
+\item
+  \textbf{Camp Tensions:} Legionaries are terrified, some talk of
+  desertion
+\item
+  \textbf{The Augur's Warning:} Private conversation revealing that the
+  spear belongs to Mars and was used in a divine war \# Chapter 2: The
+  Tribune's Gambit
+\end{itemize}
+
+\section{Session Overview}\label{session-overview-1}
+
+A Tribune arrives from Rome with secret orders regarding the spear.
+Meanwhile, Germanic raiders attack the fort, and the party must defend
+it while uncovering the Tribune's true agenda.
+
+\textbf{Level:} 4 → Advance to 5 at session end \textbf{Key Goal:}
+Defend the fort and discover the Tribune's mission
+
+\section{Opening Scene: The Tribune
+Arrives}\label{opening-scene-the-tribune-arrives}
+
+Three days after the spear's discovery, a Tribune arrives from Rome with
+an elite escort of Praetorian Guards. He's young, polished, and
+dangerously intelligent.
+
+\textbf{Read aloud:} \textgreater{} The gates open to admit a small
+column of riders in gleaming armor. At their head rides a man too clean
+for the frontier---purple-trimmed toga, oiled hair, rings on every
+finger. He surveys the fort like a merchant appraising damaged goods.
+Behind him, six Praetorians sit their horses like statues of iron and
+menace.
+
+\textbf{Tribune Lucius Valerius Maximus} introduces himself with
+imperial authority: - He carries sealed orders from the Senate - The
+spear is to be delivered to Rome immediately - The Legate is relieved of
+command pending investigation - The party is promoted to ``Special
+Envoys of the Senate'' (higher authority than the Legate) - They will
+escort the Tribune and the spear to Rome
+
+\textbf{Complications:} - The Legate is furious but powerless - The
+Augur warns this is exactly what Mars wants---the spear in Rome -
+Centurion Varro quietly tells the party: ``That Tribune is lying about
+something''
+
+\section{Scene 1: Investigation \&
+Tensions}\label{scene-1-investigation-tensions}
+
+The party has time to investigate before departure. Options:
+
+\textbf{Talk to the Augur (Cassia Liviana):} - She's had visions: the
+spear in Rome, the Capitoline Hill running with blood - She reveals the
+spear's true history: it was used by a mortal hero to kill a minor god
+(Mars' son) - Mars cursed it so that whoever wields it will be consumed
+by war - The Tribune knows this---he plans to use it to assassinate
+someone in Rome
+
+\textbf{Talk to Centurion Varro:} - He's served 20 years and knows
+political games - ``That Tribune didn't come here for the spear---he
+came here to disappear the spear'' - He suspects the Tribune plans to
+fake an attack and blame the party - Offers to help if things go wrong
+
+\textbf{Search the Tribune's Quarters (DC 16 Investigation):} - Find a
+letter (encoded, DC 14 Intelligence to decipher) - The letter is from a
+Senator ordering the Tribune to ``ensure the artifact never reaches
+Rome'' - The Tribune is supposed to destroy it---or those carrying it
+
+\section{Scene 2: The Raid}\label{scene-2-the-raid}
+
+That night, Germanic raiders attack the fort in force. This is
+coordinated with the Tribune's arrival (suspicious timing).
+
+\textbf{Battle Map:} Fort under siege - 20+ raiders (use \textbf{Tribal
+Warrior} stat blocks in waves) - 2 \textbf{Berserkers} (CR 2 each) - 1
+\textbf{Germanic Chieftain} - \textbf{Vercingetorix the Red} (use
+\textbf{Gladiator} stat block, CR 5)
+
+\textbf{Combat Phases:}
+
+\textbf{Phase 1: The Walls (2 rounds)} - Raiders swarm the palisade with
+ladders - Party can man ballistae (2d10 piercing, DC 12 Dex to aim) -
+Archers provide supporting fire
+
+\textbf{Phase 2: Breach (3 rounds)} - Raiders break through the gate
+with a battering ram - Melee combat in the fort courtyard - Centurion
+Varro fights alongside the party
+
+\textbf{Phase 3: The Headquarters (2 rounds)} - Vercingetorix and
+berserkers push toward where the spear is kept - The Tribune and his
+Praetorians mysteriously don't help - Climactic battle to defend the
+principia
+
+\section{Scene 3: The Truth Revealed}\label{scene-3-the-truth-revealed}
+
+After the battle, as the party catches their breath:
+
+\textbf{The Tribune's Move:} - He accuses the party of being traitors
+who let the raiders in - Claims they were trying to steal the spear -
+Orders his Praetorians to arrest them - The Legate, humiliated and
+angry, supports this
+
+\textbf{Centurion Varro's Intervention:} - He steps forward: ``The
+Tribune is the traitor!'' - Reveals what he saw: the Tribune signaling
+the raiders from the walls - The Praetorians hesitate---they respect
+Varro as a veteran
+
+\textbf{Decision Point:} The party must choose: 1. \textbf{Fight} --
+Combat with Tribune + 6 Praetorians (deadly) 2. \textbf{Diplomacy} --
+Convince the Praetorians (DC 16 Persuasion with evidence) 3.
+\textbf{Flee} -- Escape with the spear into the Germanic forest 4.
+\textbf{Surrender} -- Give up the spear to see what happens
+
+\section{Conclusion Options}\label{conclusion-options}
+
+\textbf{If they expose the Tribune:} - He confesses under pressure: he
+was ordered to ensure the spear never reached Rome - A powerful Senator
+fears what it could do in the wrong hands - He offers them a deal: help
+him destroy it, and they'll all walk away free - The Augur supports
+destroying it
+
+\textbf{If they flee:} - They're now fugitives from Rome with a cursed
+spear - Vercingetorix intercepts them in the forest - He offers
+alliance: ``My enemy's enemy is my friend''
+
+\textbf{If they fight:} - Chaotic battle, possible deaths - They must
+flee afterward - Now hunted by both Rome and the Germanic tribes
+
+\textbf{Advance to Level 5}
+
+\section{DM Notes}\label{dm-notes-1}
+
+\subsection{Vercingetorix the Red (Germanic
+Chieftain)}\label{vercingetorix-the-red-germanic-chieftain}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Motivation:} He's not evil---he's defending his homeland from
+  Roman expansion
+\item
+  Can become an unlikely ally if the party treats him with respect
+\item
+  Has his own history with the spear: it killed his grandfather
+\end{itemize}
+
+\subsection{The Tribune's Secret}\label{the-tribunes-secret}
+
+Lucius Valerius is caught between loyalty to Rome and orders from a
+corrupt Senator. He's not wholly evil---he genuinely believes destroying
+the spear is best for Rome. This creates moral complexity.
+
+\subsection{Pacing}\label{pacing}
+
+This session should feel tense and chaotic. The raid happens fast, and
+the party must make quick decisions with incomplete
+information---classic Guy Sclanders ``pressure cooker'' design. \#
+Chapter 3: Through the Dark Forest
+
+\section{Session Overview}\label{session-overview-2}
+
+The party must journey through the Teutoburg Forest---either fleeing
+Rome or on a secret mission to destroy the spear. They face natural
+dangers, Germanic tribes, and the spear's corrupting influence.
+
+\textbf{Level:} 5 → Advance to 6 at session end \textbf{Key Goal:} Reach
+the sacred grove where the spear can be destroyed
+
+\section{Opening: The Choice is Made}\label{opening-the-choice-is-made}
+
+Based on Session 2's ending, the party now has a clear goal: -
+\textbf{If allied with Tribune:} Secret mission to destroy the spear at
+an ancient grove - \textbf{If fugitives:} Hunted by Rome, seeking refuge
+with Vercingetorix - \textbf{If holding spear:} Fighting its corrupting
+whispers every day
+
+\textbf{Read aloud:} \textgreater{} The forest swallows you whole.
+Ancient oaks rise like cathedral columns, their canopy so thick that
+even at midday, twilight reigns. The Romans call this the Dark
+Forest---the place where legions disappear. Your guide
+(Tribune/Vercingetorix/Augur) moves carefully, watching the shadows.
+Behind you, somewhere in the green gloom, pursuers gather.
+
+\section{Scene 1: The Haunted Grove}\label{scene-1-the-haunted-grove}
+
+The party camps in a grove that feels wrong---too quiet, too still.
+
+\textbf{That night:} - Anyone attuned to the spear has vivid nightmares
+(Wisdom save DC 15 or gain exhaustion) - Visions of ancient battles,
+blood-soaked altars, screaming gods - The spear whispers: ``You could
+end this. Take me to Rome. Rule the world.''
+
+\textbf{Corruption Check:} - Anyone who touched the spear must make a
+Wisdom save (DC 14) - Failure: Corruption level increases by 1 - At
+corruption level 3+, they begin arguing for keeping the spear
+
+\textbf{Morning Discovery:} - Three legionaries are found dead, throats
+cut - No tracks, no signs of struggle - One has carved into a tree:
+``MARS SEES ALL''
+
+\textbf{Investigation (DC 14 Survival):} - The killer is among the
+party's NPCs - One of them (your choice) is possessed by Mars' influence
+through the spear - They'll try to kill whoever plans to destroy it
+
+\section{Scene 2: The Germanic
+Ambush}\label{scene-2-the-germanic-ambush}
+
+Germanic scouts have tracked the party. Depending on their relationship
+with Vercingetorix:
+
+\textbf{If Allied with Vercingetorix:} - His scouts find them, offer
+safe passage - But they demand a toll: information about Roman troop
+movements - Moral dilemma: betray Rome or fight your allies?
+
+\textbf{If Not Allied:} - Ambush by 12 \textbf{Tribal Warriors} + 2
+\textbf{Scouts} (CR 1/2 each) - Combat in dense forest (difficult
+terrain, limited visibility) - Can be ended via diplomacy if they drop
+weapons and negotiate
+
+\textbf{Key NPC:} \textbf{Thusnelda}, a Germanic druid - She knows of
+the spear: ``The God-Killer walks again'' - Offers to guide them to the
+sacred grove where it can be unmade - Warns: ``The grove demands a
+sacrifice---blood for blood, life for death''
+
+\section{Scene 3: The River Crossing}\label{scene-3-the-river-crossing}
+
+The party must cross a swollen river to reach the sacred grove.
+
+\textbf{Challenges:} - River is 100 feet wide, fast-flowing (DC 14
+Athletics to swim) - Fallen tree serves as a bridge (DC 12 Acrobatics to
+cross safely) - Rope can be strung across with teamwork
+
+\textbf{Complication: The Hunters Arrive}
+
+As they cross, Roman pursuers catch up: - 8 \textbf{Legionaries} (use
+\textbf{Guard} stat blocks) - 1 \textbf{Centurion} (use \textbf{Knight}
+stat block, CR 3) - Led by the Legate if he survived Session 2
+
+\textbf{Set-piece Combat:} - Half the party on each side of the river -
+Ranged attacks across the water - Melee on the bridge - Environmental
+hazards: fast current, slippery logs
+
+\textbf{Moral Choice:} - The Romans are just following orders - Killing
+them makes the party murderers in Rome's eyes - Can they find a way to
+stop them without bloodshed?
+
+\section{Scene 4: The Sacred Grove}\label{scene-4-the-sacred-grove}
+
+Deep in the forest lies an ancient Germanic holy site---older than Rome,
+older than memory.
+
+\textbf{Read aloud:} \textgreater{} You emerge into a clearing unlike
+any in the forest. Seven standing stones ring a granite altar, each
+carved with spiraling runes that seem to shift in the firelight. The air
+thrums with power---old power, wild power. The spear pulses in response,
+eager and hungry. Thusnelda the druid kneels at the altar: ``Here was
+where the God-Killer was forged. Here it must be unmade.''
+
+\textbf{The Ritual Requirements:}
+
+Thusnelda explains: 1. The spear must be placed on the altar 2. Blood of
+a warrior must anoint it (1d6 damage, voluntary) 3. A sacrifice must be
+made---something precious given willingly 4. The party must speak the
+words: ``We unmake what was made in darkness''
+
+\textbf{The Sacrifice:} - Can be a magic item - Can be a memory (lose
+proficiency in a skill) - Can be an NPC ally who volunteers -
+\textbf{Or} someone can take the corruption upon themselves (instant
+corruption level 5)
+
+\section{Scene 5: Mars Intervenes}\label{scene-5-mars-intervenes}
+
+As the ritual begins, \textbf{Mars himself manifests}---not physically,
+but as a divine presence.
+
+\textbf{Encounter: Avatar of Mars} - Use \textbf{Fire Elemental} stat
+block (CR 5) but reskin as divine wrath - Appears as a towering figure
+of flame and fury - Speaks: ``THE SPEAR IS MINE! YOU DARE DESTROY WHAT I
+CREATED?''
+
+\textbf{Combat Options:} 1. \textbf{Fight:} Destroy the avatar (hard
+battle) 2. \textbf{Complete the Ritual:} Hold it off while one person
+finishes the ritual (skill challenge) 3. \textbf{Bargain:} Offer Mars
+something else in exchange (what could a god want?)
+
+\textbf{Skill Challenge: Complete the Ritual} - 4 successes before 3
+failures - Each round, one person makes a check while others defend: -
+Religion DC 15 (speak the words of unmaking) - Arcana DC 15 (channel the
+grove's ancient magic) - Athletics DC 13 (hold the spear steady) -
+Insight DC 14 (resist the spear's influence)
+
+\section{Conclusion}\label{conclusion-1}
+
+\textbf{If they destroy the spear:} - It shatters with a scream that
+echoes across the spiritual realm - Mars' avatar dissipates, roaring:
+``YOU HAVE MADE AN ENEMY OF WAR ITSELF!'' - The corruption fades from
+anyone affected - Thusnelda: ``You have done what heroes of old could
+not. But Mars does not forget.''
+
+\textbf{If they fail or keep it:} - Mars claims the spear---or whoever
+holds it - They must flee with a god's wrath upon them
+
+\textbf{Advance to Level 6}
+
+\section{DM Notes}\label{dm-notes-2}
+
+\subsection{Guy Sclanders' ``Sacrifice
+Principle''}\label{guy-sclanders-sacrifice-principle}
+
+Victory should cost something meaningful. Players should feel they've
+earned the win through sacrifice, not just dice rolls. The ritual's
+sacrifice requirement embodies this perfectly.
+
+\subsection{Branching Paths}\label{branching-paths}
+
+This session has multiple valid outcomes based on player choices: - Path
+A: Spear destroyed, Mars angry, party must deal with consequences - Path
+B: Spear kept, corruption spreads, different finale ahead - Path C:
+Bargain struck with Mars, new alliance formed
+
+Track which path they take for Session 4's opening. \# Chapter 4: Return
+to Rome
+
+\section{Session Overview}\label{session-overview-3}
+
+The party returns to Rome as either heroes or fugitives. They must
+navigate the political intrigue of the Senate, discover who truly wanted
+the spear, and prepare for the final confrontation.
+
+\textbf{Level:} 6 → Advance to 7 at session end \textbf{Key Goal:}
+Uncover the conspiracy and choose a side
+
+\section{Opening: The Eternal City}\label{opening-the-eternal-city}
+
+\textbf{If spear was destroyed:} \textgreater{} Rome rises before you
+like a marble dream. The Capitoline Hill gleams white in the sun, the
+Senate House stands proud, and the Colosseum roars with distant crowds.
+But beneath the beauty, you sense rot. The gods are angry. Mars most of
+all.
+
+\textbf{If spear still exists:} \textgreater{} Rome beckons like a
+serpent's smile. Somewhere in those marble halls, someone is searching
+for the spear you carry. Someone powerful. Someone willing to kill for
+it. The city that once felt like home now feels like a trap.
+
+\section{Scene 1: Audience with the
+Senate}\label{scene-1-audience-with-the-senate}
+
+The party is summoned before a secret Senate committee in a private
+chamber.
+
+\textbf{Present:} - \textbf{Senator Gaius Cassius Brutus} (the primary
+villain) - \textbf{Senator Marcus Tullius} (an ally) - \textbf{Vestal
+Virgin Cornelia} (neutral observer) - \textbf{Tribune Lucius} (if alive)
+
+\textbf{Senator Brutus' Proposal:}
+
+He's smooth, charming, and utterly ruthless: - Congratulates them on
+dealing with the ``frontier incident'' - Reveals he was behind the
+Tribune's orders - Offers them wealth, land, citizenship for their
+families - \textbf{In exchange:} They must retrieve the spear (if
+destroyed) or give it to him (if it exists)
+
+\textbf{His True Plan (DC 16 Insight to sense):} - He plans to use the
+spear to assassinate the Emperor during the upcoming Triumph - Install
+himself as dictator ``to restore the Republic'' - Believes Mars will
+bless this if enough blood is spilled
+
+\textbf{Senator Tullius' Warning:} - Pulls them aside afterward -
+``Brutus is mad. He dreams of being Romulus reborn.'' - Offers to help
+stop Brutus if they'll testify against him
+
+\section{Scene 2: The City of
+Shadows}\label{scene-2-the-city-of-shadows}
+
+The party has 24 hours before the Emperor's Triumph. They can
+investigate:
+
+\textbf{Option A: Follow Brutus' Agents} - DC 14 Stealth to tail them
+through Rome - Discover an underground temple to Mars - Cultists
+preparing a ritual to resurrect the spear - Combat: 6 \textbf{Cult
+Fanatics} (CR 2 each)
+
+\textbf{Option B: Gather Evidence} - DC 15 Investigation in the Senate
+archives - Find records of Brutus embezzling military funds - His
+correspondences mention ``the God-Killer returns'' - Can use this to
+turn other Senators against him
+
+\textbf{Option C: Seek Divine Aid} - Visit the Temple of Jupiter - The
+High Priest performs augury (costs 100 gp) - Jupiter speaks through
+omens: ``The scales must balance. Blood for blood. Ambition for
+humility.'' - Cryptic but helpful: suggests Mars can be appeased with a
+worthy sacrifice
+
+\textbf{Option D: Confront Brutus Directly} - Dramatic scene in his
+villa - He monologues about Rome's corruption - ``The Republic died with
+Caesar. I will resurrect it.'' - Can convince him to stand down (DC 18
+Persuasion) or goad him into revealing plans
+
+\section{Scene 3: The Underground
+Temple}\label{scene-3-the-underground-temple}
+
+Following clues leads to Brutus' secret temple beneath Rome.
+
+\textbf{Read aloud:} \textgreater{} Beneath the city, deeper than the
+sewers, you find it---a cavern carved into living rock. The walls run
+red with ochre paint made to look like blood. An altar of black stone
+dominates the center, and upon it\ldots{} a spear. Not the original---a
+replica, but one infused with dark ritual magic. Around it, cultists
+chant in Latin: ``Mars Ultor! Mars Ultor! Avenge us!''
+
+\textbf{Encounter:} - \textbf{Senator Brutus} (use \textbf{Priest} stat
+block but with +2 AC from magic armor) - 4 \textbf{Cult Fanatics} - 1
+\textbf{Gladiator} (his personal bodyguard)
+
+\textbf{The Ritual:}
+
+If the party disrupted it in time: - Brutus rages: ``You've doomed Rome!
+The gods demand blood!'' - He attacks with the replica spear (functions
+as +1 magic spear, but not cursed)
+
+If they're too late: - Brutus completes the ritual - Mars partially
+possesses him (\textbf{Brutus transforms: HP doubled, +4 to hit, attacks
+twice per turn}) - ``I AM THE HAND OF MARS! I WILL PURGE ROME IN FIRE
+AND BLOOD!''
+
+\section{Scene 4: The Emperor's
+Triumph}\label{scene-4-the-emperors-triumph}
+
+The climax occurs during the public Triumph---the Emperor's victory
+parade.
+
+\textbf{Setting:} The streets of Rome, thousands of citizens watching
+
+\textbf{If Brutus escaped:} - He makes his move during the parade -
+Attempts to kill the Emperor with the spear/replica - Party must stop
+him publicly - Chase scene through crowds (skill challenge)
+
+\textbf{If Brutus was captured:} - His remaining agents make the attempt
+- Party must identify the assassin among the crowd - DC 16 Perception
+each round (3 rounds before the Emperor is in danger)
+
+\textbf{Public Combat:} - Fighting in front of Rome - Civilians scream
+and flee (difficult terrain) - Praetorian Guards join the fight - Every
+action is witnessed---reputation consequences
+
+\section{Conclusion}\label{conclusion-2}
+
+\textbf{Victory Outcomes:}
+
+\textbf{If they saved the Emperor:} - Honored as heroes - Granted Roman
+citizenship and land - But: Mars is still angry about the spear
+
+\textbf{If they exposed the conspiracy:} - Senate is purged of
+conspirators - They're celebrated but also feared - ``Those who topple
+Senators can topple anyone''
+
+\textbf{If Brutus escaped:} - He's now a fugitive with dangerous
+knowledge - Sets up potential sequel - Mars' cult grows in the shadows
+
+\textbf{Advance to Level 7}
+
+\section{DM Notes}\label{dm-notes-3}
+
+\subsection{Senator Brutus as Villain}\label{senator-brutus-as-villain}
+
+Using Guy Sclanders' villain archetypes, Brutus is a ``Never Present''
+villain until this session. The party has been fighting his plans, not
+him directly. Now he's revealed---and he's not just evil, he's a
+\textbf{tragic antagonist} who genuinely believes he's saving Rome.
+
+\subsection{Moral Complexity}\label{moral-complexity}
+
+Players might sympathize with Brutus' goals (ending corruption,
+restoring the Republic) even if they disagree with his methods. This
+creates dramatic tension---classic Sclanders storytelling.
+
+\subsection{Setting Up the Finale}\label{setting-up-the-finale}
+
+Whatever outcome, Session 5 will deal with Mars' wrath. The god of war
+doesn't forgive, and the party has made an enemy of divinity itself. \#
+Chapter 5: The Wrath of Mars
+
+\section{Session Overview}\label{session-overview-4}
+
+The final confrontation. Mars, god of war, demands satisfaction for the
+destruction of his spear. The party must face divine judgment, make
+ultimate sacrifices, and determine the fate of Rome itself.
+
+\textbf{Level:} 7 (final level) \textbf{Key Goal:} Survive Mars'
+judgment and end the campaign
+
+\section{Opening: The Sky Bleeds Red}\label{opening-the-sky-bleeds-red}
+
+Three days after the Triumph, omens appear across Rome.
+
+\textbf{Read aloud:} \textgreater{} The sky turns red at noon. Not
+sunset red---blood red. The Tiber runs backwards. Every dog in Rome
+howls in unison. In the Forum, the statue of Mars begins to weep crimson
+tears. The augurs declare what everyone already knows: the god of war is
+coming, and he is angry. \textgreater{} \textgreater{} That night, you
+all share the same dream. You stand in a vast arena of black sand
+beneath a blood-red sky. Mars himself sits upon a throne of swords and
+bones. His voice shakes your souls: ``YOU DESTROYED WHAT WAS MINE. NOW
+PAY THE PRICE.''
+
+\section{Scene 1: The Divine Summons}\label{scene-1-the-divine-summons}
+
+The party awakens in a pocket dimension---Mars' personal arena, pulled
+from the mortal world.
+
+\textbf{The Arena:} - Circular, 200 feet across - Black sand that drinks
+blood - Walls lined with the weapons of fallen heroes - No escape except
+victory or death
+
+\textbf{Mars' Judgment:}
+
+The god appears---15 feet tall, clad in bronze armor, face hidden behind
+a Corinthian helmet.
+
+\textbf{His Voice (speak with gravitas):} \textgreater{} ``MORTALS. You
+defied a god. You destroyed the Spear of Broken Oaths, forged in divine
+fire and quenched in the blood of my son. For this crime, you will
+either PROVE YOUR WORTH in combat, or DIE screaming. Choose your
+champion---or face me as one.''
+
+\textbf{The Challenge:} - Option A: One party member fights Mars in
+single combat - Option B: Entire party fights Mars together (harder but
+shared risk) - Option C: Attempt to bargain (what can you offer a god?)
+
+\section{Scene 2: Trial by Combat}\label{scene-2-trial-by-combat}
+
+\textbf{Option A: Champion vs.~Mars}
+
+Mars summons a \textbf{Divine Champion} (use \textbf{Warlord} stat
+block, CR 12 but adjust for single PC): - Actually a manifestation of
+Mars' power, not the god himself - HP: 150, AC: 18 - Multiattack: Three
+attacks with spear (+9 to hit, 1d8+5 piercing + 2d6 fire) -
+\textbf{Divine Fury}: Once per turn, can make an extra attack -
+\textbf{War God's Resilience}: Resistance to all damage except radiant
+
+\textbf{Arena Mechanics:} - Weapons of fallen heroes line the walls (can
+grab them as bonus action) - Each weapon grants different power: -
+\textbf{Gladius of Achilles}: +2 weapon, advantage on attack rolls but
+vulnerability to piercing - \textbf{Shield of Horatius}: +3 AC, can use
+reaction to impose disadvantage on attacks - \textbf{Spear of Leonidas}:
+Reach 10 ft, +1d10 damage if you haven't moved this turn
+
+\textbf{Victory Condition:} - Reduce the champion to 0 HP - Or survive
+10 rounds (Mars will respect endurance)
+
+\textbf{Option B: Party vs.~Mars (Himself)}
+
+\textbf{Mars, God of War} (Custom stat block): - HP: 300, AC: 20 -
+Legendary Resistance (3/day) - \textbf{Multiattack}: Mars makes four
+attacks - \textbf{God-Forged Blade}: +12 to hit, 2d8+7 slashing + 2d8
+fire - \textbf{Divine Smite}: (Recharge 5-6) All creatures within 20
+feet, DC 18 Con save, 8d6 fire damage (half on success) -
+\textbf{Legendary Actions} (3/turn): - \textbf{Attack}: Make one weapon
+attack - \textbf{War Cry}: Frightened condition, DC 16 Wisdom save -
+\textbf{Summon Warriors}: 4 Shadows of the Fallen appear (use
+\textbf{Specter} stats)
+
+\textbf{Tactical Notes:} - Mars is arrogant; exploitable with clever
+tactics - The arena weapons help but have costs - He respects
+courage---reckless bravery can impress him
+
+\section{Scene 3: The Bargain}\label{scene-3-the-bargain}
+
+\textbf{If they attempt to bargain:}
+
+Mars laughs: ``WHAT COULD MORTALS OFFER A GOD?''
+
+\textbf{Possible Offers:} 1. \textbf{Service}: Become his champions,
+fight in his name for a year and a day 2. \textbf{Sacrifice}: One party
+member offers their life willingly 3. \textbf{Victory}: Win a war in
+Mars' name (leads to future quest) 4. \textbf{Honor}: Promise to build a
+new temple to Mars and spread his glory 5. \textbf{Knowledge}: Reveal
+secrets of divine weapons (if they learned anything)
+
+\textbf{Persuasion Check:} - DC 20 Persuasion or DC 18 Religion
+(understanding what gods value) - Success: Mars accepts, modifies the
+trial - Failure: ``YOU INSULT ME WITH EMPTY WORDS!'' (combat begins)
+
+\textbf{Compelling Offers:} - ``Great Mars, we destroyed the spear not
+to defy you, but because it was being misused by men unworthy of your
+gift.'' - ``Let us prove our devotion by serving you---not as slaves,
+but as honored champions.'' - ``The spear's corruption dishonored your
+name. We purified your reputation.''
+
+\section{Scene 4: The Price of
+Victory}\label{scene-4-the-price-of-victory}
+
+\textbf{After defeating/bargaining with Mars:}
+
+The god is impressed (or satisfied):
+
+\textbf{Mars' Decree:} \textgreater{} ``You have proven yourselves
+worthy. Few mortals have stood before a god and lived. I grant you this:
+your lives, and my grudging respect. But know this---you have interfered
+with divine will. All actions have consequences.''
+
+\textbf{The Cost (pick 2-3 based on campaign):}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Marked by War}: Each character bears Mars' brand (glowing red
+  scar). They have advantage on Intimidation checks but disadvantage on
+  Persuasion with peaceful folk. They are called to war whenever Mars
+  wills it.
+\item
+  \textbf{The Burden}: One character (their choice) becomes Mars'
+  Chosen. They gain a powerful boon (resistance to fire, extra attack,
+  etc.) but must answer Mars' call once per year to fight in his name.
+\item
+  \textbf{The Debt}: They owe Mars a future favor---to be called in when
+  he chooses. This could lead to a sequel campaign.
+\item
+  \textbf{The Transformation}: One willing character is transformed into
+  a demigod servant of Mars---they leave the party to serve at his side
+  (noble sacrifice ending for that PC).
+\item
+  \textbf{The Prophecy}: Mars reveals a dark prophecy about Rome's
+  future: ``In three generations, Rome will burn. Only those marked by
+  war can prevent it.'' (Sequel hook)
+\end{enumerate}
+
+\section{Scene 5: Return to Rome}\label{scene-5-return-to-rome}
+
+The party awakens in the Temple of Mars in Rome, collapsed before the
+altar.
+
+\textbf{Epilogue Choices (based on their decisions throughout):}
+
+\textbf{Heroic Ending:} - Hailed as saviors of Rome - Granted estates,
+citizenship, military commissions - Senators seek their counsel - But
+they carry Mars' mark---forever changed
+
+\textbf{Pragmatic Ending:} - Quietly rewarded, given land on the
+frontier - They leave Rome, knowing too much about its corruption -
+Settle as veterans, with Mars' blessings and curses
+
+\textbf{Tragic Ending:} - One or more died in Mars' arena - Survivors
+honored but broken - Rome celebrates them as martyrs - Their sacrifice
+is remembered in legend
+
+\textbf{Rebellious Ending:} - They rejected both Mars and Rome - Now
+hunted, they flee beyond the Empire - Freedom, but at the cost of home -
+Legends grow of the ``God-Defiers''
+
+\section{Final Scene: Where Are They
+Now?}\label{final-scene-where-are-they-now}
+
+Have each player describe where their character is one year later: -
+What are they doing? - How has Mars' mark affected them? - What do they
+remember most about this campaign? - What rumors do they hear about the
+others?
+
+\textbf{DM Final Narration:} \textgreater{} The Shadow of Mars is long.
+What you did in those five sessions echoes across the Empire. Some call
+you heroes. Some call you fools. Mars himself calls you\ldots{}
+interesting. And in the divine realm, that is far more dangerous than
+being forgotten. Your story is over. But legends never truly end.
+
+\section{Campaign Conclusion}\label{campaign-conclusion}
+
+Thank the players. Roll credits. Share highlights.
+
+\textbf{Experience Wrap-Up:} - All characters end at level 7 - Award
+bonus XP for exceptional roleplay - Distribute any remaining
+treasure/rewards
+
+\textbf{Sequel Hooks} (if desired): - Mars' prophecy about Rome's
+burning - Brutus' cult surviving in shadows - Other gods taking interest
+in the party - Germanic alliance or conflict - The spear's fragments
+scattered across the world
+
+\section{DM Notes: Guy Sclanders' Principles
+Applied}\label{dm-notes-guy-sclanders-principles-applied}
+
+\subsection{Master Plot}\label{master-plot}
+
+The entire campaign followed the ``Spear's Journey'': Discovery →
+Corruption → Destruction → Divine Judgment. Each session escalated the
+stakes while maintaining player agency.
+
+\subsection{Theme}\label{theme}
+
+\textbf{Duty vs.~Free Will} - The party was caught between Rome's
+orders, the gods' will, and their own conscience. Every major decision
+forced them to choose what they truly valued.
+
+\subsection{Villain Archetypes}\label{villain-archetypes}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Legate Corvinus}: Blunt Force Nemesis (direct opposition,
+  Session 1-2)
+\item
+  \textbf{Senator Brutus}: Never Present (manipulating from shadows,
+  revealed Session 4)
+\item
+  \textbf{Mars}: Divine Antagonist (ultimate challenge, Session 5)
+\end{itemize}
+
+\subsection{Player Agency}\label{player-agency}
+
+Throughout, multiple paths were valid. No ``right'' answer---only
+consequences. This is peak Sclanders design.
+
+\subsection{Meaningful Sacrifice}\label{meaningful-sacrifice}
+
+From the grove ritual to Mars' final price, victories cost something
+precious. Players should feel they \emph{earned} their ending.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Appendix: Quick Reference}\label{appendix-quick-reference}
+
+\subsection{Key NPCs Quick Stats}\label{key-npcs-quick-stats}
+
+\textbf{Legate Marcus Corvinus}: Use \textbf{Knight} (CR 3)
+\textbf{Tribune Lucius}: Use \textbf{Noble} with +2 AC (CR 2)
+\textbf{Centurion Varro}: Use \textbf{Veteran} (CR 3) \textbf{Augur
+Cassia}: Use \textbf{Priest} (CR 2) \textbf{Vercingetorix}: Use
+\textbf{Gladiator} (CR 5) \textbf{Thusnelda (Druid)}: Use \textbf{Druid}
+(CR 2) \textbf{Senator Brutus}: Use \textbf{Priest} + magic armor (CR 3)
+
+\subsection{Corruption Track
+Reference}\label{corruption-track-reference}
+
+\textbf{Level 0}: No corruption \textbf{Level 1}: Disturbing dreams
+\textbf{Level 2}: Disadvantage on Wisdom saves \textbf{Level 3}: DC 12
+Wisdom save to retreat \textbf{Level 4}: DC 14 Wisdom save to avoid
+attacking allies \textbf{Level 5}: Fully corrupted, NPC
+
+\subsection{Spear of Mars Properties}\label{spear-of-mars-properties}
+
+\textbf{+2 weapon} \textbf{Damage}: 1d8 piercing + 1d8 necrotic
+\textbf{Attunement Curse}: Disadvantage on Wisdom saves, increasing
+aggression \textbf{Destruction}: Can only be destroyed at the sacred
+grove via ritual
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Campaign Complete! May Mars smile upon your future games!}
+
+
+\backmatter
+
+
+\end{document}
